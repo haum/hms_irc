@@ -1,4 +1,5 @@
 import logging
+import json
 
 import irc.bot
 
@@ -35,4 +36,19 @@ class MyBot(irc.bot.SingleServerIRCBot):
         get_logger().info("Joined {}".format(self.channel))
 
     def rabbit(self, ch, method, properties, body):
-        self.serv.privmsg(self.channel, body)
+
+        if method.routing_key == 'reddit':
+            item = json.loads(body.decode('utf-8'))
+
+            msg = '[reddit /u/{}] {} {}'.format(
+                item['author'], item['title'], item['url'])
+
+            self.serv.privmsg(self.channel, msg)
+
+            get_logger().info('Posted reddit link {} from {}'.format(
+                item['id'], item['author']))
+
+        else:
+            get_logger().warning(
+                'Message from routing key {} not handled'.format(
+                    method.routing_key))

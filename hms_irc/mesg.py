@@ -11,24 +11,46 @@ class Rabbit:
 
     def __init__(self):
         self.listenners = []
+        self.exchange = 'haum'
+        self.routing_keys = ['reddit']
 
     def connect(self, host):
+
+        # Connect
+
         get_logger().info("Connecting to RabbitMQ server...")
 
         self.conn = pika.BlockingConnection(
             pika.ConnectionParameters(host=host))
         self.channel = self.conn.channel()
 
-        get_logger().info("Declaring exhanger...")
-        self.channel.exchange_declare(exchange='haum', type='fanout')
+        # Exchanger
+
+        get_logger().info("Declaring direct exchanger {}...".format(
+            self.exchange))
+
+        self.channel.exchange_declare(exchange=self.exchange, type='direct')
+
+        # Create queue
 
         get_logger().info("Creating RabbitMQ queue...")
         result = self.channel.queue_declare(exclusive=True)
 
         self.queue_name = result.method.queue
 
-        get_logger().info("Binding queue to exchanger...")
-        self.channel.queue_bind(exchange='haum', queue=self.queue_name)
+        # Binding
+
+        for routing_key in self.routing_keys:
+            get_logger().info(
+                "Binding queue to exchanger {} with routing key {}...".format(
+                    self.exchange, routing_key))
+
+            self.channel.queue_bind(
+                exchange=self.exchange,
+                queue=self.queue_name,
+                routing_key=routing_key)
+
+        # Callback
 
         get_logger().info("Binding callback...")
         self.channel.basic_consume(
