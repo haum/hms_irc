@@ -1,5 +1,5 @@
-HAUM’s IRC microservice
-=======================
+hms_irc, the HAUM’s IRC microservice
+====================================
 
 A microservice that follows routing keys on a RabbitMQ direct exchanger and
 publish messages on IRC depending on the messages received.

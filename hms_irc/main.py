@@ -4,32 +4,44 @@ import time
 
 import coloredlogs
 
-from bot import MyBot
-from mesg import Rabbit
+from hms_irc.bot import MyBot
+from hms_irc.mesg import Rabbit
+from hms_irc import settings
+
 
 def get_logger():
     return logging.getLogger(__name__)
 
-logging.basicConfig(
-    format='%(asctime)-15s [%(levelname)s] (%(name)s) %(message)s',
-    level=logging.INFO)
 
+def main():
 
-coloredlogs.install(level='INFO')
+    # Logging
+    logging.basicConfig(
+        format='%(asctime)-15s [%(levelname)s] (%(name)s) %(message)s',
+        level=logging.INFO)
 
-rabbit = Rabbit()
+    coloredlogs.install(level='INFO')
 
-rabbit.connect('10.1.0.1')
+    # Connect to Rabbit
+    rabbit = Rabbit()
+    rabbit.connect(settings.RABBIT_HOST)
 
-bot = MyBot("#testhaum", "rabbitmq", "irc.freenode.net")
-rabbit.listenners.append(bot.rabbit)
+    # IRC bot settings
+    bot = MyBot(settings.IRC_CHAN, settings.IRC_NAME, settings.IRC_SERVER)
 
-irc_thread = Thread(target=bot.start)
-irc_thread.start()
+    # Add callback
+    rabbit.listenners.append(bot.rabbit)
 
-while not bot.joined:
-    get_logger().warning('Waiting for IRC bot to join channel')
-    time.sleep(1)
+    # Start IRC thread
+    irc_thread = Thread(target=bot.start)
+    irc_thread.start()
 
-rabbit_thread = Thread(target=rabbit.consume)
-rabbit_thread.start()
+    # Wait for IRC bot to connect before fetching
+    # TODO: use passive wait using a callback instead
+    while not bot.joined:
+        get_logger().warning('Waiting for IRC bot to join channel')
+        time.sleep(1)
+
+    # Start the rabbit receive thread
+    rabbit_thread = Thread(target=rabbit.consume)
+    rabbit_thread.start()

@@ -2,6 +2,8 @@ import logging
 
 import pika
 
+from hms_irc import settings
+
 
 def get_logger():
     return logging.getLogger(__name__)
@@ -11,8 +13,8 @@ class Rabbit:
 
     def __init__(self):
         self.listenners = []
-        self.exchange = 'haum'
-        self.routing_keys = ['reddit']
+        self.exchange = settings.RABBIT_EXCHANGE
+        self.routing_keys = settings.RABBIT_ROUTING_KEYS
 
     def connect(self, host):
 
