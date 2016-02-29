@@ -1,6 +1,5 @@
 import logging
 from threading import Thread
-import time
 
 import coloredlogs
 
@@ -26,22 +25,33 @@ def main():
     rabbit = Rabbit()
     rabbit.connect(settings.RABBIT_HOST)
 
+    rabbit_thread = Thread(target=rabbit.consume)
+    rabbit_thread.setDaemon(True)  # To kill the thread when main is gone
+
     # IRC bot settings
     bot = MyBot(settings.IRC_CHAN, settings.IRC_NAME, settings.IRC_SERVER)
 
-    # Add callback
+    # Add callbacks
     rabbit.listenners.append(bot.rabbit)
 
-    # Start IRC thread
-    irc_thread = Thread(target=bot.start)
-    irc_thread.start()
+    def chan_joined():
+        # Start the rabbit receive thread
+        get_logger().info('Starting RabbitMQ consume thread...')
+        rabbit_thread.start()
 
-    # Wait for IRC bot to connect before fetching
-    # TODO: use passive wait using a callback instead
-    while not bot.joined:
-        get_logger().warning('Waiting for IRC bot to join channel')
-        time.sleep(1)
+    bot.join_callback = chan_joined
 
-    # Start the rabbit receive thread
-    rabbit_thread = Thread(target=rabbit.consume)
-    rabbit_thread.start()
+    # Start IRC thread that will start Rabbit thread using callback
+    try:
+        get_logger().info('Starting IRC bot...')
+        bot.start()
+    except KeyboardInterrupt:
+        get_logger().critical("Got a KeyboardInterrupt")
+        get_logger().info("Disconnecting from Rabbit")
+
+        rabbit.stop_consume()
+        rabbit.disconnect()
+
+        get_logger().info("Disconnecting from IRC")
+        bot.die(msg="got a KeyboardInterrupt in my face!")
+

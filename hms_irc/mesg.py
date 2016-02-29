@@ -62,7 +62,13 @@ class Rabbit:
         get_logger().info("Starting passive consuming...")
         self.channel.start_consuming()
 
+    def stop_consume(self):
+        self.channel.stop_consuming()
+
     def callback(self, *args):
         get_logger().info("Callback called")
         for li in self.listenners:
             li(*args)
+
+    def disconnect(self):
+        self.conn.close()
