@@ -44,20 +44,14 @@ class MyBot(irc.bot.SingleServerIRCBot):
         get_logger().info("Goodbye")
         sys.exit(0)
 
-    def rabbit(self, ch, method, properties, body):
+    def handle_rabbit_msg(self, ch, method, properties, body):
 
-        if method.routing_key == 'reddit':
-            item = json.loads(body.decode('utf-8'))
+        msg = json.loads(body.decode('utf-8'))
 
-            msg = '[reddit /u/{}] {} {}'.format(
-                item['author'], item['title'], item['url'])
+        try:
+            from hms_irc import handlers
+            func = getattr(handlers, method.routing_key)
+            func(self.serv, self.channel, msg)
 
-            self.serv.privmsg(self.channel, msg)
-
-            get_logger().info('Posted reddit link {} from {}'.format(
-                item['id'], item['author']))
-
-        else:
-            get_logger().warning(
-                'Message from routing key {} not handled'.format(
-                    method.routing_key))
+        except AttributeError as e:
+            get_logger().error(e)
