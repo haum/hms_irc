@@ -1,6 +1,7 @@
 import sys
 import logging
 import json
+import importlib
 
 import irc.bot
 
@@ -49,9 +50,10 @@ class MyBot(irc.bot.SingleServerIRCBot):
         msg = json.loads(body.decode('utf-8'))
 
         try:
-            from hms_irc import handlers
-            func = getattr(handlers, method.routing_key)
+            module = importlib.import_module(
+                'hms_irc.handlers.' + method.routing_key)
+            func = getattr(module, 'handle')
             func(self.serv, self.channel, msg)
 
-        except AttributeError as e:
+        except (ImportError, AttributeError) as e:
             get_logger().error(e)

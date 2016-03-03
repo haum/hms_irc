@@ -5,12 +5,14 @@ def get_logger():
     return logging.getLogger(__name__)
 
 
-def reddit(irc_server, irc_chan, msg):
-
-    privmsg = '[reddit /u/{}] {} {}'.format(
+def msg_to_privmsg(msg):
+    return '[reddit /u/{}] {} {}'.format(
         msg['author'], msg['title'], msg['url'])
 
-    irc_server.privmsg(irc_chan, privmsg)
+
+def handle(irc_server, irc_chan, msg):
+
+    irc_server.privmsg(irc_chan, msg_to_privmsg(msg))
 
     get_logger().info('Posted reddit link {} from {}'.format(
         msg['id'], msg['author']))
