@@ -7,7 +7,7 @@ class TestReddit(unittest.TestCase):
 
     """Test case for Reddit IRC handler."""
 
-    def test_privmsg_contains_basic_information(self):
+    def test_privmsg_contains_data(self):
         msg = {
             'author': 'MicroJoe',
             'title': 'This is a test',
