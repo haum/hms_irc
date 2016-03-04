@@ -15,10 +15,6 @@ def get_logger():
 def main():
 
     # Logging
-    logging.basicConfig(
-        format='%(asctime)-15s [%(levelname)s] (%(name)s) %(message)s',
-        level=logging.INFO)
-
     coloredlogs.install(level='INFO')
 
     # Connect to Rabbit
