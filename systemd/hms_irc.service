@@ -1,0 +1,14 @@
+[Unit]
+Description=HAUM's Reddit microservice
+After=mutli-user.target
+Requires=multi-user.target
+
+[Service]
+Type=simple
+User=hms_reddit
+ExecStart=/home/hms_reddit/hms_reddit/systemd/run.sh
+Restart=on-failure
+RestartSec=3600
+
+[Install]
+WantedBy=multi-user.target
