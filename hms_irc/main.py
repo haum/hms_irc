@@ -28,7 +28,7 @@ def main():
     bot = MyBot(settings.IRC_CHAN, settings.IRC_NAME, settings.IRC_SERVER)
 
     # Add callbacks
-    rabbit.listenners.append(bot.handle_rabbit_msg)
+    rabbit.listeners.append(bot.handle_rabbit_msg)
 
     def chan_joined():
         # Start the rabbit receive thread

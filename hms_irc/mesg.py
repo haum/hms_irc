@@ -12,7 +12,7 @@ def get_logger():
 class Rabbit:
 
     def __init__(self):
-        self.listenners = []
+        self.listeners = []
         self.exchange = settings.RABBIT_EXCHANGE
         self.routing_keys = settings.RABBIT_ROUTING_KEYS
 
@@ -67,8 +67,8 @@ class Rabbit:
         self.channel.stop_consuming()
 
     def callback(self, *args):
-        get_logger().info("Message received! Calling listenners...")
-        for li in self.listenners:
+        get_logger().info("Message received! Calling listeners...")
+        for li in self.listeners:
             li(*args)
 
     def disconnect(self):
