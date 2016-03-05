@@ -1,11 +1,11 @@
 [Unit]
-Description=HAUM's Reddit microservice
+Description=HAUM's IRC microservice
 After=mutli-user.target
 Requires=multi-user.target
 
 [Service]
 Type=simple
-User=hms_reddit
+User=hms_irc
 ExecStart=/home/hms_irc/hms_irc/systemd/run.sh
 Restart=on-failure
 RestartSec=3600
