@@ -32,8 +32,11 @@ def main():
 
     def chan_joined():
         # Start the rabbit receive thread
-        get_logger().info('Starting RabbitMQ consume thread...')
-        rabbit_thread.start()
+        if not rabbit_thread.is_alive():
+            get_logger().info('Starting RabbitMQ consume thread...')
+            rabbit_thread.start()
+        else:
+            get_logger().warning("Chan joined but RabbitMQ thread is alive")
 
     bot.join_callback = chan_joined
 
@@ -50,4 +53,3 @@ def main():
 
         get_logger().info("Disconnecting from IRC")
         bot.die(msg="got a KeyboardInterrupt in my face!")
-
