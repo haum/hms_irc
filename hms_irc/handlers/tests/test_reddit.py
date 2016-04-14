@@ -12,7 +12,8 @@ class TestReddit(unittest.TestCase):
         self.body = {
             'author': 'MicroJoe',
             'title': 'This is a test',
-            'url': 'http://haum.org'
+            'url': 'http://haum.org',
+            'id': 'abcdef'
         }
 
     def test_privmsg_contains_data(self):
@@ -30,6 +31,6 @@ class TestReddit(unittest.TestCase):
 
         reddit.handle(irc_server, irc_chan, self.body)
 
-        irc_server.privmsg.assert_called_with(
+        irc_server.privmsg.assert_called_once_with(
             irc_chan,
             reddit.msg_to_privmsg(self.body))
