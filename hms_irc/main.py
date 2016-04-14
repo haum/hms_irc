@@ -54,6 +54,6 @@ def main():
         rabbit.disconnect()
 
         get_logger().info("Disconnecting from IRC")
-        bot.die(msg="got a KeyboardInterrupt in my face!")
+        bot.die(msg="got a KeyboardInterrupt in my face! >_<")
 
         sys.exit(0)
