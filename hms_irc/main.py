@@ -27,6 +27,7 @@ def main():
 
     # IRC bot settings
     bot = MyBot(settings.IRC_CHAN, settings.IRC_NAME, settings.IRC_SERVER)
+    bot.rabbit = rabbit
 
     # Add callbacks
     rabbit.listeners.append(bot.handle_rabbit_msg)

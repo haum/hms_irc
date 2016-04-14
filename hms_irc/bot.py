@@ -3,6 +3,7 @@ import json
 import importlib
 
 import irc.bot
+from irc.client import NickMask
 
 
 def get_logger():
@@ -17,6 +18,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
         self.joined = False
         self.serv = None
         self.join_callback = None
+        self.rabbit = None
 
     def on_welcome(self, serv, ev):
         self.serv = serv
@@ -32,6 +34,30 @@ class MyBot(irc.bot.SingleServerIRCBot):
         newnick = serv.get_nickname() + '_'
         get_logger().warning("Nick already in use, using {}".format(newnick))
         serv.nick(newnick)
+
+    def on_privmsg(self, serv, ev):
+        get_logger().info("PRIVMSG {}".format(ev))
+        self.serv.privmsg(NickMask(ev.source).nick, "hey")
+
+    def on_pubmsg(self, serv, ev):
+        message = ev.arguments[0]
+
+        if message.startswith('!'):
+            command_text = message[1:]
+            command_parts = command_text.split(' ')
+            command_name = command_parts[0]
+            command_args = command_parts[1:]
+
+            get_logger().info("Received command {} with args {}"
+                              .format(command_name, command_args))
+
+            data = {
+                'command': command_name,
+                'arg': ' '.join(command_args),
+                'nick': NickMask(ev.source).nick
+            }
+
+            self.rabbit.publish_command(data)
 
     def on_join(self, serv, ev):
         self.joined = True

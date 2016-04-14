@@ -2,12 +2,12 @@
 
 # RabbitMQ
 
-RABBIT_HOST = 'localhost'         # Address of the server
-RABBIT_EXCHANGE = 'haum'          # Name of the direct exchanger
+RABBIT_HOST = 'localhost'                   # Address of the server
+RABBIT_EXCHANGE = 'haum'                    # Name of the direct exchanger
+RABBIT_COMMAND_ROUTING_KEY = 'irc_command'  # Routing key for irc command
 
 # List of routing keys to listen to
 RABBIT_ROUTING_KEYS = ['reddit', 'irc_debug']
-
 
 # IRC
 
