@@ -1,3 +1,4 @@
+import sys
 import logging
 from threading import Thread
 
@@ -53,3 +54,5 @@ def main():
 
         get_logger().info("Disconnecting from IRC")
         bot.die(msg="got a KeyboardInterrupt in my face!")
+
+        sys.exit(0)

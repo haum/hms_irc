@@ -1,4 +1,3 @@
-import sys
 import logging
 import json
 import importlib
@@ -42,8 +41,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
             self.join_callback()
 
     def on_disconnect(self, serv, ev):
-        get_logger().info("Goodbye")
-        sys.exit(0)
+        get_logger().info("Disconnected")
 
     def handle_rabbit_msg(self, ch, method, properties, body):
 
