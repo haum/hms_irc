@@ -35,5 +35,3 @@ class TestIRCDebug(unittest.TestCase):
 
         irc_debug.handle(irc_server, irc_chan, {})
         irc_server.privmsg.assert_not_called()
-
-
