@@ -14,6 +14,9 @@ class TestIRCDebug(unittest.TestCase):
             self.body['privmsg'],
             irc_debug.msg_to_privmsg(self.body))
 
+    def test_decode_empty_privmsg(self):
+        self.assertIsNone(irc_debug.msg_to_privmsg({}))
+
     def test_call_privmsg(self):
         irc_chan = '#haum-test'
 
@@ -23,3 +26,14 @@ class TestIRCDebug(unittest.TestCase):
         irc_debug.handle(irc_server, irc_chan, self.body)
 
         irc_server.privmsg.assert_called_with(irc_chan, self.body['privmsg'])
+
+    def test_call_empty_privmsg(self):
+        irc_chan = '#haum-test'
+
+        irc_server = Mock()
+        irc_server.privmsg = Mock()
+
+        irc_debug.handle(irc_server, irc_chan, {})
+        irc_server.privmsg.assert_not_called()
+
+
