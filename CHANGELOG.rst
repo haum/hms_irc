@@ -7,4 +7,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[1.0] - 2016-04-14
+------------------
+
 - First prototype
