@@ -21,25 +21,29 @@ class MyBot(irc.bot.SingleServerIRCBot):
         self.rabbit = None
 
     def on_welcome(self, serv, ev):
+        """Method called when we are connected to the IRC server."""
         self.serv = serv
         get_logger().info("Signed on")
         get_logger().info("Joining {}...".format(self.channel))
         serv.join(self.channel)
 
     def on_kick(self, serv, ev):
-        get_logger().warning("Kicked")
-        self.die('got kicked')
+        """Method called when someone was kicked on a chan."""
+        get_logger().warning("An user has been kicked")
 
     def on_nicknameinuse(self, serv, ev):
+        """Method called when the nickname is already in use."""
         newnick = serv.get_nickname() + '_'
         get_logger().warning("Nick already in use, using {}".format(newnick))
         serv.nick(newnick)
 
     def on_privmsg(self, serv, ev):
+        """Method called when someone is talking in private to us."""
         get_logger().info("PRIVMSG {}".format(ev))
         self.serv.privmsg(NickMask(ev.source).nick, "hey")
 
     def on_pubmsg(self, serv, ev):
+        """Method called when someone is talking on a public chan."""
         message = ev.arguments[0]
 
         if message.startswith('!'):
@@ -60,6 +64,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
             self.rabbit.publish_command(data)
 
     def on_join(self, serv, ev):
+        """Method called when we join an IRC chan."""
         self.joined = True
         get_logger().info("Joined {}".format(self.channel))
 
@@ -67,10 +72,13 @@ class MyBot(irc.bot.SingleServerIRCBot):
             self.join_callback()
 
     def on_disconnect(self, serv, ev):
+        """Method called when we disconnect from the IRC server."""
         get_logger().info("Disconnected")
 
     def handle_rabbit_msg(self, ch, method, properties, body):
+        """Method that will handle incoming RabbitMQ messages."""
 
+        # Decode the JSON payload received from RabbitMQ
         msg = json.loads(body.decode('utf-8'))
 
         try:

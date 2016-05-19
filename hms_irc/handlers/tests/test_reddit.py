@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from hms_irc.handlers import reddit
 
 
-class TestReddit(unittest.TestCase):
+class TestRedditHandler(unittest.TestCase):
 
     """Test case for Reddit IRC handler."""
 

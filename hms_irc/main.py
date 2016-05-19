@@ -5,7 +5,7 @@ from threading import Thread
 import coloredlogs
 
 from hms_irc.bot import MyBot
-from hms_irc.mesg import Rabbit
+from hms_irc.rabbit import RabbitClient
 from hms_irc import settings
 
 
@@ -14,12 +14,13 @@ def get_logger():
 
 
 def main():
+    """Entry point of the program."""
 
     # Logging
     coloredlogs.install(level='INFO')
 
     # Connect to Rabbit
-    rabbit = Rabbit()
+    rabbit = RabbitClient()
     rabbit.connect(settings.RABBIT_HOST)
 
     rabbit_thread = Thread(target=rabbit.consume)
@@ -33,7 +34,7 @@ def main():
     rabbit.listeners.append(bot.handle_rabbit_msg)
 
     def chan_joined():
-        # Start the rabbit receive thread
+        """Callback that will start the RabbitMQ receive thread."""
         if not rabbit_thread.is_alive():
             get_logger().info('Starting RabbitMQ consume thread...')
             rabbit_thread.start()
@@ -50,10 +51,13 @@ def main():
         get_logger().critical("Got a KeyboardInterrupt")
         get_logger().info("Disconnecting from Rabbit")
 
+        # Beautiful RabbiMQ shutdown attempt
         rabbit.stop_consume()
         rabbit.disconnect()
 
+        # Beautiful IRC shutdown
         get_logger().info("Disconnecting from IRC")
         bot.die(msg="got a KeyboardInterrupt in my face! >_<")
 
+        # Exit and kill daemon thread
         sys.exit(0)

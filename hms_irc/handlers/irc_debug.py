@@ -6,6 +6,7 @@ def get_logger():
 
 
 def msg_to_privmsg(msg):
+    """Extract the PRIVMSG content from the RabbitMQ message."""
     if 'privmsg' in msg:
         return msg['privmsg']
 

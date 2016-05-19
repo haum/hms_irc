@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from hms_irc.handlers import irc_debug
 
 
-class TestIRCDebug(unittest.TestCase):
+class TestIRCDebugHandler(unittest.TestCase):
 
     def setUp(self):
         self.body = {'privmsg': 'This is a test.'}

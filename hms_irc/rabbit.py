@@ -10,7 +10,7 @@ def get_logger():
     return logging.getLogger(__name__)
 
 
-class Rabbit:
+class RabbitClient:
 
     def __init__(self):
         self.listeners = []
@@ -19,6 +19,7 @@ class Rabbit:
         self.command_routing_key = settings.RABBIT_COMMAND_ROUTING_KEY
 
     def connect(self, host):
+        """Connect to a RabbitMQ server and set up receive callback."""
 
         # Connect
 
@@ -58,9 +59,10 @@ class Rabbit:
 
         get_logger().info("Binding callback...")
         self.channel.basic_consume(
-            self.callback, queue=self.queue_name, no_ack=True)
+            self._callback, queue=self.queue_name, no_ack=True)
 
     def publish_command(self, data):
+        """Send a command with internal routing key to the exchange."""
         get_logger().info("Publishing command {}.".format(data))
 
         self.channel.basic_publish(
@@ -69,19 +71,25 @@ class Rabbit:
             body=json.dumps(data)
         )
 
-
     def consume(self):
+        """Start the infinite blocking consume process."""
         get_logger().info("Starting passive consuming...")
         self.channel.start_consuming()
 
     def stop_consume(self):
+        """Stop the consume process."""
         get_logger().info("Stopping passive consuming...")
         self.channel.stop_consuming()
 
-    def callback(self, *args):
+    def _callback(self, *args):
+        """Internal method that will be called when receiving message."""
+
         get_logger().info("Message received! Calling listeners...")
+
         for li in self.listeners:
             li(*args)
 
     def disconnect(self):
+        """Disconnect from the RabbitMQ server."""
+        get_logger().info("Disconnecting from RabbitMQ server...")
         self.conn.close()
