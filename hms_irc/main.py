@@ -20,7 +20,10 @@ def main():
     coloredlogs.install(level='INFO')
 
     # Connect to Rabbit
-    rabbit = RabbitClient()
+    rabbit = RabbitClient(
+        exchange=settings.RABBIT_EXCHANGE,
+        routing_keys=settings.RABBIT_ROUTING_KEYS,)
+
     rabbit.connect(settings.RABBIT_HOST)
 
     rabbit_thread = Thread(target=rabbit.consume)

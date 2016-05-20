@@ -5,6 +5,8 @@ import importlib
 import irc.bot
 from irc.client import NickMask
 
+from hms_irc import settings
+
 
 def get_logger():
     return logging.getLogger(__name__)
@@ -61,7 +63,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
                 'nick': NickMask(ev.source).nick
             }
 
-            self.rabbit.publish_command(data)
+            self.rabbit.publish(settings.RABBIT_COMMAND_ROUTING_KEY, data)
 
     def on_join(self, serv, ev):
         """Method called when we join an IRC chan."""

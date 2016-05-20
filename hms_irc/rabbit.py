@@ -12,11 +12,12 @@ def get_logger():
 
 class RabbitClient:
 
-    def __init__(self):
+    """Generic class that handle communication with RabbitMQ."""
+
+    def __init__(self, exchange, routing_keys):
         self.listeners = []
         self.exchange = settings.RABBIT_EXCHANGE
         self.routing_keys = settings.RABBIT_ROUTING_KEYS
-        self.command_routing_key = settings.RABBIT_COMMAND_ROUTING_KEY
 
     def connect(self, host):
         """Connect to a RabbitMQ server and set up receive callback."""
@@ -61,14 +62,14 @@ class RabbitClient:
         self.channel.basic_consume(
             self._callback, queue=self.queue_name, no_ack=True)
 
-    def publish_command(self, data):
-        """Send a command with internal routing key to the exchange."""
-        get_logger().info("Publishing command {}.".format(data))
+    def publish(self, routing_key, dct):
+        """Send a dict with internal routing key to the exchange."""
+        get_logger().info("Publishing message {}.".format(dct))
 
         self.channel.basic_publish(
             exchange=self.exchange,
-            routing_key=self.command_routing_key,
-            body=json.dumps(data)
+            routing_key=routing_key,
+            body=json.dumps(dct)
         )
 
     def consume(self):
