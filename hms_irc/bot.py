@@ -87,6 +87,10 @@ class MyBot(irc.bot.SingleServerIRCBot):
             module = importlib.import_module(
                 'hms_irc.handlers.' + method.routing_key)
             func = getattr(module, 'handle')
+
+            get_logger().info('Calling handler for routing key {}'
+                              .format(method.routing_key))
+
             func(self.serv, self.channel, msg)
 
         except (ImportError, AttributeError) as e:

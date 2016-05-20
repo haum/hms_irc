@@ -7,8 +7,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
-- Removed kicked-user-made-bot-think-he-was-kicked bug
+- Global ping handling
 - Using generic RabbitMQ wrapper for easy reuse
+- Removed kicked-user-made-bot-think-he-was-kicked bug
 
 [1.0] - 2016-04-14
 ------------------

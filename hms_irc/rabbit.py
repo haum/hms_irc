@@ -15,7 +15,7 @@ class RabbitClient:
     """Generic class that handle communication with RabbitMQ."""
 
     def __init__(self, exchange, routing_keys):
-        self.listeners = []
+        self.listeners = [self._handle_ping]
         self.exchange = settings.RABBIT_EXCHANGE
         self.routing_keys = settings.RABBIT_ROUTING_KEYS
 
@@ -64,7 +64,8 @@ class RabbitClient:
 
     def publish(self, routing_key, dct):
         """Send a dict with internal routing key to the exchange."""
-        get_logger().info("Publishing message {}.".format(dct))
+        get_logger().info("Publishing message {} on routing key "
+                          "{}...".format(dct, routing_key))
 
         self.channel.basic_publish(
             exchange=self.exchange,
@@ -82,6 +83,11 @@ class RabbitClient:
         get_logger().info("Stopping passive consuming...")
         self.channel.stop_consuming()
 
+    def disconnect(self):
+        """Disconnect from the RabbitMQ server."""
+        get_logger().info("Disconnecting from RabbitMQ server...")
+        self.conn.close()
+
     def _callback(self, *args):
         """Internal method that will be called when receiving message."""
 
@@ -90,7 +96,16 @@ class RabbitClient:
         for li in self.listeners:
             li(*args)
 
-    def disconnect(self):
-        """Disconnect from the RabbitMQ server."""
-        get_logger().info("Disconnecting from RabbitMQ server...")
-        self.conn.close()
+    def _handle_ping(self, ch, method, properties, body):
+
+        if method.routing_key == 'ping':
+            payload = json.loads(body.decode('utf-8'))
+
+            if payload['type'] == 'request':
+                resp = {
+                    'type': 'answer',
+                    'name': settings.PING_NAME,
+                    'source': payload
+                }
+
+                self.publish('ping', resp)
