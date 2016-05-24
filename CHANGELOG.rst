@@ -7,7 +7,10 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
-- Global ping handling
+[1.1] - 2016-05-24
+------------------
+
+- Global ping/pong handling over IRC
 - Using generic RabbitMQ wrapper for easy reuse
 - Removed kicked-user-made-bot-think-he-was-kicked bug
 
