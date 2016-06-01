@@ -17,7 +17,9 @@ def handle(irc_server, irc_chan, msg):
 
     elif msg['type'] == 'answer' and msg['source']['source'] == 'irc':
 
+        nick = msg['source']['nick']
+
         privmsg = 'Le service `{}` a répondu présent'.format(msg['name'])
 
-        irc_server.privmsg(irc_chan, privmsg)
+        irc_server.privmsg(nick, privmsg)
         get_logger().info('Posted pong message: {}'.format(privmsg))
