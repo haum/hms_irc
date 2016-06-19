@@ -12,7 +12,7 @@ setup(
     name='hms_irc',
     version='2.0.1',
     packages=['hms_irc', 'hms_irc.handlers', 'hms_irc.handlers.tests'],
-    scripts=['bin/hms_irc'],
+    scripts=['bin/hms_irc', 'bin/hms_irc_debug'],
 
     url='https://github.com/haum/hms_irc',
     license='MIT',
