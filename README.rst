@@ -7,11 +7,11 @@ publish messages on IRC depending on the messages received.
 Using
 -----
 
-Create a Python 3 virtualenv and install dependencies::
+Create a Python 3 virtualenv and install software::
 
     $ virtualenv -ppython3 venv
     $ source venv/bin/activate
-    (venv) $ pip install -r requirements.txt
+    (venv) $ pip install .
 
 Then start the bot when you are in the repository root folder::
 
@@ -21,4 +21,4 @@ License
 -------
 
 This project is brought to you under MIT license. For further information,
-please read the provided LICENSE file.
+please read the provided ``LICENSE.txt`` file.
