@@ -4,8 +4,9 @@ from threading import Thread
 
 import coloredlogs
 
+from hms_base.client import Client
+
 from hms_irc.bot import MyBot
-from hms_irc.rabbit import RabbitClient
 from hms_irc import settings
 
 
@@ -20,13 +21,12 @@ def main():
     coloredlogs.install(level='INFO')
 
     # Connect to Rabbit
-    rabbit = RabbitClient(
-        exchange=settings.RABBIT_EXCHANGE,
-        routing_keys=settings.RABBIT_ROUTING_KEYS,)
+    rabbit = Client('hms_irc', settings.RABBIT_EXCHANGE,
+                    settings.RABBIT_ROUTING_KEYS)
 
     rabbit.connect(settings.RABBIT_HOST)
 
-    rabbit_thread = Thread(target=rabbit.consume)
+    rabbit_thread = Thread(target=rabbit.start_consuming)
     rabbit_thread.setDaemon(True)  # To kill the thread when main is gone
 
     # IRC bot settings

@@ -77,21 +77,16 @@ class MyBot(irc.bot.SingleServerIRCBot):
         """Method called when we disconnect from the IRC server."""
         get_logger().info("Disconnected")
 
-    def handle_rabbit_msg(self, ch, method, properties, body):
+    def handle_rabbit_msg(self, client, topic, dct):
         """Method that will handle incoming RabbitMQ messages."""
 
-        # Decode the JSON payload received from RabbitMQ
-        msg = json.loads(body.decode('utf-8'))
-
         try:
-            module = importlib.import_module(
-                'hms_irc.handlers.' + method.routing_key)
+            module = importlib.import_module('hms_irc.handlers.' + topic)
             func = getattr(module, 'handle')
 
-            get_logger().info('Calling handler for routing key {}'
-                              .format(method.routing_key))
+            get_logger().info('Calling handler for topic {}'.format(topic))
 
-            func(self.serv, self.channel, msg)
+            func(self.serv, self.channel, dct)
 
         except (ImportError, AttributeError) as e:
             get_logger().error(e)
