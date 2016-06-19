@@ -55,7 +55,7 @@ def main():
         get_logger().info("Disconnecting from Rabbit")
 
         # Beautiful RabbiMQ shutdown attempt
-        rabbit.stop_consume()
+        rabbit.stop_consuming()
         rabbit.disconnect()
 
         # Beautiful IRC shutdown
