@@ -2,4 +2,4 @@
 
 cd /home/hms_irc/hms_irc/
 . ./venv/bin/activate
-exec python run.py
+exec hms_irc

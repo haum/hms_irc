@@ -13,9 +13,9 @@ Create a Python 3 virtualenv and install software::
     $ source venv/bin/activate
     (venv) $ pip install .
 
-Then start the bot when you are in the repository root folder::
+Then start the bot inside the virtual env::
 
-    $ python run.py
+    $ hms_irc
 
 License
 -------
