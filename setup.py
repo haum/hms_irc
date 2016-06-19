@@ -33,5 +33,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    install_requires=['pika', 'hms_irc>1.0,<2', 'irc', 'coloredlogs']
+    install_requires=['pika', 'hms_base>1.0,<2', 'irc', 'coloredlogs']
 )
