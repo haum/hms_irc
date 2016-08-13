@@ -15,7 +15,7 @@ Create a Python 3 virtualenv and install software::
 
 Then start the bot inside the virtual env::
 
-    $ hms_irc
+    (venv) $ hms_irc
 
 License
 -------
