@@ -7,6 +7,11 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[2.1] - 2016-08-15
+------------------
+
+- Using ``hms_base`` version 2
+
 [2.0] - 2016-06-19
 ------------------
 

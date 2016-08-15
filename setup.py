@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='hms_irc',
-    version='2.0.1',
+    version='2.1',
     packages=['hms_irc', 'hms_irc.handlers', 'hms_irc.handlers.tests'],
     scripts=['bin/hms_irc', 'bin/hms_irc_debug'],
 
@@ -33,5 +33,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    install_requires=['pika', 'hms_base>1.0,<2', 'irc', 'coloredlogs']
+    install_requires=['pika', 'hms_base>=2.0,<3', 'irc', 'coloredlogs']
 )
