@@ -57,10 +57,14 @@ class MyBot(irc.bot.SingleServerIRCBot):
             get_logger().info("Received command {} with args {}"
                               .format(command_name, command_args))
 
+            nick = NickMask(ev.source).nick
+
+            get_logger().warning(self.channels.keys())
             data = {
                 'command': command_name,
                 'arg': ' '.join(command_args),
-                'nick': NickMask(ev.source).nick
+                'nick': nick,
+                'is_voiced': self.channels[self.channel].is_voiced(nick)
             }
 
             self.rabbit.publish(settings.RABBIT_COMMAND_ROUTING_KEY, data)

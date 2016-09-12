@@ -7,6 +7,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+- Send ``is_voiced`` information when a command is performed
+
 [2.1] - 2016-08-15
 ------------------
 
