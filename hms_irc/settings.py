@@ -17,6 +17,8 @@ IRC_SERVER = 'irc.freenode.net'  # Server to join
 IRC_CHAN = '#testhaum'           # Chan to join (do not forget the #)
 IRC_NAME = 'hms_irc'             # Name of the bot on the server
 
+# Import prod settings if existing
+
 try:
     from hms_irc.settings_prod import *
 except ImportError:
