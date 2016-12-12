@@ -85,7 +85,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
         """Method that will handle incoming RabbitMQ messages."""
 
         try:
-            module = importlib.import_module('hms_irc.handlers.' + topic)
+            module = importlib.import_module('hms_irc.receptors.' + topic)
             func = getattr(module, 'handle')
 
             get_logger().info('Calling handler for topic {}'.format(topic))
