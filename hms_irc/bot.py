@@ -2,14 +2,22 @@ import logging
 import json
 import importlib
 
+
+import attr
 import irc.bot
 from irc.client import NickMask
-
-from hms_irc import settings
 
 
 def get_logger():
     return logging.getLogger(__name__)
+
+
+@attr.s
+class IRCCommand:
+    nick = attr.ib()
+    is_voiced = attr.ib()
+    command_name = attr.ib()
+    command_args = attr.ib()
 
 
 class MyBot(irc.bot.SingleServerIRCBot):
@@ -47,27 +55,34 @@ class MyBot(irc.bot.SingleServerIRCBot):
     def on_pubmsg(self, serv, ev):
         """Method called when someone is talking on a public chan."""
         message = ev.arguments[0]
+        nick = NickMask(ev.source).nick
 
         if message.startswith('!'):
+            # Extract command from message
             command_text = message[1:]
             command_parts = command_text.split(' ')
-            command_name = command_parts[0]
-            command_args = command_parts[1:]
 
-            get_logger().info("Received command {} with args {}"
-                              .format(command_name, command_args))
+            command = IRCCommand(
+                nick=nick,
+                is_voiced=self.channels[self.channel].is_voiced(nick),
+                command_name=command_parts[0],
+                command_args=command_parts[1:]
+            )
 
-            nick = NickMask(ev.source).nick
+            get_logger().info("Received {}".format(command))
 
-            get_logger().warning(self.channels.keys())
-            data = {
-                'command': command_name,
-                'arg': ' '.join(command_args),
-                'nick': nick,
-                'is_voiced': self.channels[self.channel].is_voiced(nick)
-            }
+            try:
+                # Retrieve the 'handle' function from corresponding module
+                module = importlib.import_module(
+                    'hms_irc.transmitters.{}'.format(command.command_name))
+                func = getattr(module, 'handle')
 
-            self.rabbit.publish(settings.RABBIT_COMMAND_ROUTING_KEY, data)
+                # Call the handle function with all important arguments
+                get_logger().info('Calling transmitter for {}'.format(command))
+                func(self.rabbit, command)
+
+            except (ImportError, AttributeError) as e:
+                get_logger().error(e)
 
     def on_join(self, serv, ev):
         """Method called when we join an IRC chan."""
