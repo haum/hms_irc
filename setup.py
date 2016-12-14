@@ -10,8 +10,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='hms_irc',
-    version='2.1',
-    packages=['hms_irc', 'hms_irc.receptors', 'hms_irc.receptors.tests'],
+    version='2.2',
+    packages=['hms_irc', 'hms_irc.receptors', 'hms_irc.receptors.tests', 'hms_irc.transmitters'],
     scripts=['bin/hms_irc', 'bin/hms_irc_debug'],
 
     url='https://github.com/haum/hms_irc',
