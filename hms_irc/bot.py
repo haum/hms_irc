@@ -79,7 +79,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
                 # Call the handle function with all important arguments
                 get_logger().info('Calling transmitter for {}'.format(command))
-                func(self.rabbit, command)
+                func(self.serv, self.channel, self.rabbit, command)
 
             except (ImportError, AttributeError) as e:
                 get_logger().error(e)
@@ -99,6 +99,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
     def handle_rabbit_msg(self, client, topic, dct):
         """Method that will handle incoming RabbitMQ messages."""
 
+        get_logger().info('Handle rabbit msg topic {}'.format(topic))
         try:
             module = importlib.import_module('hms_irc.receptors.' + topic)
             func = getattr(module, 'handle')
