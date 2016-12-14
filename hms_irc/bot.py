@@ -37,6 +37,14 @@ class MyBot(irc.bot.SingleServerIRCBot):
         get_logger().info("Joining {}...".format(self.channel))
         serv.join(self.channel)
 
+    def on_join(self, serv, ev):
+        """Method called when we join an IRC chan."""
+        self.joined = True
+        get_logger().info("Joined {}".format(self.channel))
+
+        if self.join_callback is not None:
+            self.join_callback()
+
     def on_kick(self, serv, ev):
         """Method called when someone was kicked on a chan."""
         get_logger().warning("An user has been kicked")
@@ -89,13 +97,6 @@ class MyBot(irc.bot.SingleServerIRCBot):
                 get_logger().error(e)
                 self.serv.privmsg(self.channel, 'Commande inexistante')
 
-    def on_join(self, serv, ev):
-        """Method called when we join an IRC chan."""
-        self.joined = True
-        get_logger().info("Joined {}".format(self.channel))
-
-        if self.join_callback is not None:
-            self.join_callback()
 
     def on_disconnect(self, serv, ev):
         """Method called when we disconnect from the IRC server."""
