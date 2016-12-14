@@ -19,19 +19,23 @@ def dct_to_privmsgs(dct):
 
     # On line 2 we want to know SpaceApi response
     if 'spaceapi' in dct:
-        spaceapi_open = dct['spaceapi']['is_open']
-        spaceapi_badssl = dct['spaceapi']['ssl_error']
-        spaceapi_badhttp = dct['spaceapi']['bad_http_code']
-        spaceapi_globalerror = dct['spaceapi']['global_error']
+        spaceapi = dct['spaceapi']
+
+        def check(x):
+            return x in spaceapi and spaceapi[x]
 
         line2 = '[SpaceAPI] '
-        line2 += strings.SPACEAPI_OPEN if spaceapi_open else strings.SPACEAPI_CLOSED
 
-        if spaceapi_badssl:
+        if check('is_open'):
+            line2 += strings.SPACEAPI_OPEN
+        else:
+            line2 += strings.SPACEAPI_CLOSED
+
+        if check('ssl_error'):
             line2 += ' ({})'.format(strings.SPACEAPI_BAD_SSL)
-        if spaceapi_badhttp:
+        if check('bad_http_code'):
             line2 += ' ({})'.format(strings.SPACEAPI_BAD_HTTP_CODE)
-        if spaceapi_globalerror:
+        if check('global_error'):
             line2 += ' ({})'.format(strings.SPACEAPI_GLOBAL_ERROR)
 
         return (line1, line2)
