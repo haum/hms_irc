@@ -87,7 +87,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
             except (ImportError, AttributeError) as e:
                 get_logger().error(e)
-
+                self.serv.privmsg(self.channel, 'Commande inexistante')
 
     def on_join(self, serv, ev):
         """Method called when we join an IRC chan."""
