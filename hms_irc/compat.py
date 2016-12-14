@@ -1,7 +1,7 @@
 from hms_irc import settings
 
 
-def handle(rabbit, command):
+def handle(irc_server, irc_chan, rabbit, command):
 
     data = {
         'command': command.command_name,
