@@ -1,4 +1,5 @@
 from distutils.core import setup
+from setuptools import find_packages
 
 from os import path
 
@@ -11,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='hms_irc',
     version='2.2',
-    packages=['hms_irc', 'hms_irc.receptors', 'hms_irc.receptors.tests', 'hms_irc.transmitters'],
+    packages=find_packages(),
     scripts=['bin/hms_irc', 'bin/hms_irc_debug'],
 
     url='https://github.com/haum/hms_irc',
