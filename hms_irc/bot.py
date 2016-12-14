@@ -71,6 +71,10 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
             get_logger().info("Received {}".format(command))
 
+            # Handle special case for spacestatus (path dependency...)
+            if command.command_name.startswith('space'):
+                command.command_name = 'spacestatus'
+
             try:
                 # Retrieve the 'handle' function from corresponding module
                 module = importlib.import_module(
@@ -83,6 +87,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
             except (ImportError, AttributeError) as e:
                 get_logger().error(e)
+
 
     def on_join(self, serv, ev):
         """Method called when we join an IRC chan."""
