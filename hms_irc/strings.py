@@ -1,4 +1,7 @@
-MUST_BE_VOICED = "On se connait ? Tu n'es pas voiced mon ami..."
+
+# This file contains all strings in French
+
+MUST_BE_VOICED = "Papiers, s'vousplaît ! Tu n'es pas voiced mon ami..."
 UNKNOWN_ARGUMENT = "Argument invalide"
 
 # Spacestatus
