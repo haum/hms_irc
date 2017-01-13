@@ -52,34 +52,42 @@ class AgendaTest(unittest.TestCase):
         command = mkcommand("add 10/11/2017 17:45 \"Local du HAUM\" \"Test débile\" Un super test complètement débile", True)
         self.mocked_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
-            'command': {
-                'type': 'add',
+            'command': 'add',
+            'source': 'irc',
+            'arguments': {
                 'date': '10/11/2017 17:45',
                 'location': 'Local du HAUM',
                 'title': 'Test débile',
-                'desc': 'Un super test complètement débile'},
-            'source': 'irc'})
+                'desc': 'Un super test complètement débile'}})
 
     def test_add_seance(self):
         """Try to add a seance to the agenda using the bot."""
         command = mkcommand("add_seance 10/11/2017 11:42", True)
         self.mocked_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
-            'command': {'type': 'add_seance', 'date': '10/11/2017 11:42'},
-            'source': 'irc'})
+            'command': 'add_seance',
+            'source': 'irc',
+            'arguments': {
+               'date': '10/11/2017 11:42'}})
 
     def test_modify(self):
         """Try to modify an event already in the agenda using the bot"""
         command = mkcommand("modify 42 titre Un super nouveau titre", True)
         self.mocked_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
-            'command': {'type': 'modify', 'id': 42, 'field': 'titre', 'new_value': 'Un super nouveau titre'},
-            'source': 'irc'})
+            'command': 'modify',
+            'source': 'irc',
+            'arguments': {
+                'id': 42,
+                'field': 'titre',
+                'new_value': 'Un super nouveau titre'}})
 
     def test_remove(self):
         """Try to remove an event already in the agenda using the bot"""
         command = mkcommand("remove 42", True)
         self.mocked_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
-            'command': {'type': 'remove', 'id': 42},
-            'source': 'irc'})
+            'command': 'remove',
+            'source': 'irc',
+            'arguments': {
+                'id': 42}})

@@ -10,18 +10,29 @@ from hms_irc import strings
 VOICED_ARGUMENTS = ['add', 'add_seance', 'remove', 'modify']
 VALID_ARGUMENTS = VOICED_ARGUMENTS + ['help']
 
+def merge_two_dicts(x, y):
+    """Given two dicts, merge them into a new dict as a shallow copy."""
+    z = x.copy()
+    z.update(y)
+    return z
+
 
 def handle(irc_server, irc_chan, rabbit, command):
 
     # Define some useful closures
 
-    def query(command):
+    def query(command, args=None):
         """Closure for sending a query to the spacestatus microservice."""
-        rabbit.publish(
-            'agenda.query', {
-                'command': command,
-                'source': 'irc'
-            })
+        msg =  {
+            'command': command,
+            'source': 'irc'
+        }
+
+        # Add args if provided
+        if args:
+            msg['arguments'] = args
+
+        rabbit.publish('agenda.query', msg)
 
     def chanmsg(msg):
         """Closure for sending a privmsg on the chan."""
@@ -68,8 +79,7 @@ def handle(irc_server, irc_chan, rabbit, command):
 
             if result:
                 date, location, title, desc = result.groups()
-                query({
-                    'type': 'add',
+                query('add', {
                     'date': date.strip(),
                     'location': location.strip(),
                     'title': title.strip(),
@@ -82,8 +92,7 @@ def handle(irc_server, irc_chan, rabbit, command):
 
             if result:
                 date, *_ = result.groups()
-                query({
-                    'type': 'add_seance',
+                query('add_seance', {
                     'date': date.strip()
                 })
 
@@ -93,8 +102,7 @@ def handle(irc_server, irc_chan, rabbit, command):
 
             if result:
                 id, field, new_value = result.groups()
-                query({
-                    'type': 'modify',
+                query('modify', {
                     'id': int(id),
                     'field': field.strip(),
                     'new_value': new_value.strip()
@@ -106,7 +114,6 @@ def handle(irc_server, irc_chan, rabbit, command):
 
             if result:
                 id, *_ = result.groups()
-                query({
-                    'type': 'remove',
-                    'id': int(id)
+                query('remove', {
+                    'id': int(id),
                 })
