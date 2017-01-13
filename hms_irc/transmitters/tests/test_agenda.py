@@ -41,6 +41,15 @@ class AgendaTest(unittest.TestCase):
             'command': 'list',
             'source': 'irc'})
 
+    def test_list_all(self):
+        """Test list all the events in the agenda."""
+        command = mkcommand("all", False)
+        self.mocked_handle(command)
+        self.rabbit.publish.assert_called_with('agenda.query', {
+            'command': 'list',
+            'arguments': {'all': True},
+            'source': 'irc'})
+
     def test_help(self):
         """Try to call the help command of agenda."""
         command = mkcommand("help", False)

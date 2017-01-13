@@ -8,7 +8,7 @@ from hms_irc import strings
 #    handle_compat(*args, **kwargs)
 
 VOICED_ARGUMENTS = ['add', 'add_seance', 'remove', 'modify']
-VALID_ARGUMENTS = VOICED_ARGUMENTS + ['help']
+VALID_ARGUMENTS = VOICED_ARGUMENTS + ['help', 'all']
 
 def merge_two_dicts(x, y):
     """Given two dicts, merge them into a new dict as a shallow copy."""
@@ -73,6 +73,8 @@ def handle(irc_server, irc_chan, rabbit, command):
             help()
             return
 
+        if argument == 'all':
+            query('list', {'all': True})
         if argument == 'add':
             regex = re.compile(r'(\d{1,2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2})\s"([^"]+)"\s"([^"]+)"(.+)$')
             result = testregex(regex)
