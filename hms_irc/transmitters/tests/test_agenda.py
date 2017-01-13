@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 
-from hms_irc.bot import IRCCommand
+from hms_irc.irc import IRCCommand
 from hms_irc.transmitters.agenda import handle
 
 

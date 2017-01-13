@@ -6,7 +6,7 @@ import coloredlogs
 
 from hms_base.client import Client
 
-from hms_irc.bot import MyBot
+from hms_irc.ircbot import MyBot
 from hms_irc import settings
 
 

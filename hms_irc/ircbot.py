@@ -1,23 +1,14 @@
-import logging
-import json
 import importlib
+import logging
 
-
-import attr
 import irc.bot
 from irc.client import NickMask
+
+from hms_irc.irc import IRCCommand
 
 
 def get_logger():
     return logging.getLogger(__name__)
-
-
-@attr.s
-class IRCCommand:
-    nick = attr.ib()
-    is_voiced = attr.ib()
-    command_name = attr.ib()
-    command_args = attr.ib()
 
 
 class MyBot(irc.bot.SingleServerIRCBot):
