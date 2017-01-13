@@ -9,7 +9,7 @@ RABBIT_COMMAND_ROUTING_KEY = 'irc_command'  # Routing key for irc command
 PING_NAME = 'hms_irc'
 
 # List of routing keys to listen to
-RABBIT_ROUTING_KEYS = ['reddit', 'irc_debug', 'ping', 'spacestatus.*']
+RABBIT_ROUTING_KEYS = ['reddit', 'irc_debug', 'ping', 'spacestatus.*', 'agenda.answer']
 
 # IRC
 

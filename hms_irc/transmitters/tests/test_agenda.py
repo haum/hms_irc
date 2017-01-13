@@ -38,7 +38,7 @@ class AgendaTest(unittest.TestCase):
         command = mkcommand("", False)
         self.mocked_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
-            'command': 'status',
+            'command': 'list',
             'source': 'irc'})
 
     def test_help(self):
