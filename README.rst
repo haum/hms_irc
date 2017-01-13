@@ -1,6 +1,12 @@
 hms_irc, the HAUM’s IRC microservice
 ====================================
 
+.. image:: https://travis-ci.org/haum/hms_agenda.svg?branch=master
+    :target: https://travis-ci.org/haum/hms_agenda
+
+.. image:: https://coveralls.io/repos/github/haum/hms_irc/badge.svg?branch=master
+    :target: https://coveralls.io/github/haum/hms_irc?branch=master
+
 A microservice that follows routing keys on a RabbitMQ direct exchanger and
 publish messages on IRC depending on the messages received.
 
