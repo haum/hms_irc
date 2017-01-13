@@ -40,6 +40,7 @@ class AgendaTest(unittest.TestCase):
         self.rabbit.publish.assert_not_called()
 
     def test_command_not_voiced(self):
+        """Test to execute a voiced command as non-voiced user."""
         command = mkcommand("remove 42", False)
         self.wrapped_handle(command)
         self.rabbit.publish.assert_not_called()
@@ -51,6 +52,12 @@ class AgendaTest(unittest.TestCase):
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'list',
             'source': 'irc'})
+
+    def test_bad_argument(self):
+        """Test to call a valid command with a bad format."""
+        command = mkcommand("remove toto", True)
+        self.wrapped_handle(command)
+        self.rabbit.publish.assert_not_called()
 
     def test_list_all(self):
         """Test list all the events in the agenda."""
