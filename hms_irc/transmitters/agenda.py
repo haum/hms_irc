@@ -10,12 +10,6 @@ from hms_irc import strings
 VOICED_ARGUMENTS = ['add', 'add_seance', 'remove', 'modify']
 VALID_ARGUMENTS = VOICED_ARGUMENTS + ['help', 'all']
 
-def merge_two_dicts(x, y):
-    """Given two dicts, merge them into a new dict as a shallow copy."""
-    z = x.copy()
-    z.update(y)
-    return z
-
 
 def handle(irc_server, irc_chan, rabbit, command):
 

@@ -31,12 +31,23 @@ class AgendaTest(unittest.TestCase):
         self.rabbit = Mock()
         self.rabbit.publish = Mock()
 
-        self.mocked_handle = lambda msg: handle(self.irc_server, self.irc_chan, self.rabbit, msg)
+        self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan, self.rabbit, msg)
+
+    def test_invalid_argument(self):
+        """Test to call the agenda command with an invalid argument."""
+        command = mkcommand("lolilol", False)
+        self.wrapped_handle(command)
+        self.rabbit.publish.assert_not_called()
+
+    def test_command_not_voiced(self):
+        command = mkcommand("remove 42", False)
+        self.wrapped_handle(command)
+        self.rabbit.publish.assert_not_called()
 
     def test_no_arguments(self):
         """Test to call the agenda command without any argument."""
         command = mkcommand("", False)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'list',
             'source': 'irc'})
@@ -44,7 +55,7 @@ class AgendaTest(unittest.TestCase):
     def test_list_all(self):
         """Test list all the events in the agenda."""
         command = mkcommand("all", False)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'list',
             'arguments': {'all': True},
@@ -53,13 +64,13 @@ class AgendaTest(unittest.TestCase):
     def test_help(self):
         """Try to call the help command of agenda."""
         command = mkcommand("help", False)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_not_called()
 
     def test_add(self):
         """Try to add an event to the agenda using the bot."""
         command = mkcommand("add 10/11/2017 17:45 \"Local du HAUM\" \"Test débile\" Un super test complètement débile", True)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'add',
             'source': 'irc',
@@ -72,7 +83,7 @@ class AgendaTest(unittest.TestCase):
     def test_add_seance(self):
         """Try to add a seance to the agenda using the bot."""
         command = mkcommand("add_seance 10/11/2017 11:42", True)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'add_seance',
             'source': 'irc',
@@ -82,7 +93,7 @@ class AgendaTest(unittest.TestCase):
     def test_modify(self):
         """Try to modify an event already in the agenda using the bot"""
         command = mkcommand("modify 42 titre Un super nouveau titre", True)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'modify',
             'source': 'irc',
@@ -94,7 +105,7 @@ class AgendaTest(unittest.TestCase):
     def test_remove(self):
         """Try to remove an event already in the agenda using the bot"""
         command = mkcommand("remove 42", True)
-        self.mocked_handle(command)
+        self.wrapped_handle(command)
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'remove',
             'source': 'irc',
