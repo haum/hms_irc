@@ -54,7 +54,7 @@ def handle(irc_server, irc_chan, rabbit, command):
         return result
 
     if not command.command_args:
-        query('status')
+        query('list')
     else:
         # Check argument user provided
         argument = command.command_args[0]
