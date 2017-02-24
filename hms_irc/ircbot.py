@@ -64,7 +64,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
             command = IRCCommand(
                 nick=nick,
                 is_voiced=self.channels[self.channel].is_voiced(nick),
-                command_name=command_parts[0],
+                command_name=command_parts[0].lower(),
                 command_args=command_parts[1:]
             )
 
