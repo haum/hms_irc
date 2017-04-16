@@ -7,10 +7,14 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[2.2] - 2017-04-04
+------------------
+
 - Added IRC command support for spacestatus microservice
 - All the IRC part can and should now be handled by the IRC microservice and not
   by the microservices themselves (backward compatibility available)
 - Send ``is_voiced`` information when a command is performed
+- Refactored all the code into transmitters/receivers system using introspection
 
 [2.1] - 2016-08-15
 ------------------
