@@ -7,6 +7,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[2.3] - 2017-04-16
+------------------
+
 - Allow users to send toots directly
 
 [2.2] - 2017-04-04
