@@ -38,3 +38,8 @@ AGENDA_HELP = (
     "Pour modifier un élément, : !agenda modify id [titre|lieu|date|status] nouvelle valeur",
     "Pour supprimer un élément, : !agenda remove id",
 )
+
+# Toot
+
+TOOT_PENDING = "Demande de toot envoyée !"
+TOOT_USAGE = "usage: !toot contenu de mon toot"
