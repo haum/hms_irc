@@ -1,8 +1,9 @@
 import importlib
 import logging
+import signal
 
 import irc.bot
-from irc.client import NickMask
+from irc.client import NickMask, ServerConnectionError
 
 from hms_irc.irc import IRCCommand
 
@@ -20,6 +21,9 @@ class MyBot(irc.bot.SingleServerIRCBot):
         self.serv = None
         self.join_callback = None
         self.rabbit = None
+
+        # try to reconnect whenever a SIGUSR1 is received
+        signal.signal(signal.SIGUSR1, self.handle_reconnection_request)
 
     def on_welcome(self, serv, ev):
         """Method called when we are connected to the IRC server."""
@@ -107,3 +111,19 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
         except (ImportError, AttributeError) as e:
             get_logger().error(e)
+
+    def handle_reconnection_request(self, signum, frame):
+        """Method forcing a reconnection attempt when the bot's PID receives a particular
+        signal. Useful to handle *.net *.split. Silent if still connected."""
+
+        if self.serv:
+            try:
+                get_logger().error('Reconnection request received, processing..')
+                self.serv.connect()
+            except ServerConnectionError as e:
+                get_logger().error(e)
+        else:
+            get_logger().error('Reconnection request received but no serv is currently set. Ignoring.')
+
+
+
