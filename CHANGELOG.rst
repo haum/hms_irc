@@ -9,11 +9,12 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 
 - Added more tests and refactored code in order to to enhance contribution
   experience
+- Allow manual reconnect attempt using SIGUSR1
 
 [2.3] - 2017-04-16
 ------------------
 
-- Allow users to send toots directly
+- Allow users to send toots directly for ``hms_mastodon``
 
 [2.2] - 2017-04-04
 ------------------
