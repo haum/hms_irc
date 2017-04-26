@@ -1,6 +1,7 @@
 import sys
 import logging
 from threading import Thread
+import time
 
 import coloredlogs
 
@@ -45,6 +46,16 @@ def main():
             get_logger().warning("Chan joined but RabbitMQ thread is alive")
 
     bot.join_callback = chan_joined
+
+    # Create restart thread
+    def restart_periodic():
+        while True:
+            time.sleep(60)
+            bot.reconnect_if_disconnected()
+
+    restart_thread = Thread(target=restart_periodic)
+    restart_thread.setDaemon(True)
+    restart_thread.start()
 
     # Start IRC thread that will start Rabbit thread using callback
     try:

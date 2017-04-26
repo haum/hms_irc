@@ -115,7 +115,9 @@ class MyBot(irc.bot.SingleServerIRCBot):
     def handle_reconnection_request(self, signum, frame):
         """Method forcing a reconnection attempt when the bot's PID receives a particular
         signal. Useful to handle *.net *.split. Silent if still connected."""
+        self.reconnect_if_disconnected()
 
+    def reconnect_if_disconnected(self):
         if self.serv:
             try:
                 get_logger().error('Reconnection request received, processing..')
@@ -124,6 +126,3 @@ class MyBot(irc.bot.SingleServerIRCBot):
                 get_logger().error(e)
         else:
             get_logger().error('Reconnection request received but no serv is currently set. Ignoring.')
-
-
-
