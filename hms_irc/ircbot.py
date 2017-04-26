@@ -6,6 +6,7 @@ import irc.bot
 from irc.client import NickMask, ServerConnectionError
 
 from hms_irc.irc import IRCCommand
+from hms_irc import settings
 
 
 def get_logger():
@@ -118,11 +119,21 @@ class MyBot(irc.bot.SingleServerIRCBot):
         self.reconnect_if_disconnected()
 
     def reconnect_if_disconnected(self):
-        if self.serv:
-            try:
-                get_logger().error('Reconnection request received, processing..')
-                self.serv.connect()
-            except ServerConnectionError as e:
-                get_logger().error(e)
-        else:
-            get_logger().error('Reconnection request received but no serv is currently set. Ignoring.')
+        if not self.serv:
+            get_logger().error('Reconnection request received but no serv is'
+                               ' currently set. Ignoring.')
+            return
+
+        try:
+            get_logger().info(
+                'Reconnection request received, processing...')
+
+            if self.serv.connected:
+                get_logger().info('Server already connected, nothing to do')
+            else:
+                get_logger().info('Server was disconnected, reconnecting')
+                self.serv.reconnect()
+
+        except ServerConnectionError as e:
+            get_logger().error(e)
+
