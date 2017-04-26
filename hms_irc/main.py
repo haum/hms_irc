@@ -50,7 +50,7 @@ def main():
     # Create restart thread
     def restart_periodic():
         while True:
-            time.sleep(60)
+            time.sleep(3600)
             bot.reconnect_if_disconnected()
 
     restart_thread = Thread(target=restart_periodic)

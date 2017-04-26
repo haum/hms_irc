@@ -9,6 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 
 - Added more tests and refactored code in order to to enhance contribution
   experience
+- Automatic reconnect attempt every hour
 - Allow manual reconnect attempt using SIGUSR1
 
 [2.3] - 2017-04-16
