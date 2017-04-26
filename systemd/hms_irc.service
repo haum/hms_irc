@@ -7,8 +7,8 @@ Requires=multi-user.target
 Type=simple
 User=hms_irc
 ExecStart=/home/hms_irc/hms_irc/systemd/run.sh
-Restart=always
-WatchdogSec=3600
+#Restart=always
+#WatchdogSec=3600
 
 [Install]
 WantedBy=multi-user.target
