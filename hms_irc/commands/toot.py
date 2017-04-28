@@ -3,6 +3,7 @@ import logging
 from hms_irc import strings
 from hms_irc.irc import IRCHandler
 
+
 def get_logger():
     return logging.getLogger(__name__)
 
@@ -17,7 +18,10 @@ class TootHandler(IRCHandler):
                 self.toot(' '.join(command.command_args))
                 self.chanmsg(strings.TOOT_PENDING)
         else:
-            self.chanmsg(strings.TOOT_USAGE)
+            self.display_usage()
+
+    def display_usage(self):
+        self.chanmsg(strings.TOOT_USAGE)
 
     def toot(self, msg):
         """Closure for sending a toot."""
