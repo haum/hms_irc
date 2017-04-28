@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 
-from hms_irc.receptors import irc_debug
+from hms_irc.receivers import irc_debug
 
 
 class TestIRCDebugHandler(unittest.TestCase):

@@ -102,7 +102,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
         get_logger().info('Handle rabbit msg topic {}'.format(topic))
         try:
-            module = importlib.import_module('hms_irc.receptors.' + topic)
+            module = importlib.import_module('hms_irc.receivers.' + topic)
             func = getattr(module, 'handle')
 
             get_logger().info('Calling handler for topic {}'.format(topic))

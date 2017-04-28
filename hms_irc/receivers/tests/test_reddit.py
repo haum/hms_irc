@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 
-from hms_irc.receptors import reddit
+from hms_irc.receivers import reddit
 
 
 class TestRedditHandler(unittest.TestCase):
