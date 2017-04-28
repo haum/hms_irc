@@ -25,12 +25,10 @@ def handle(irc_server, irc_chan, rabbit, command):
 
     get_logger().info('Toot with command {}'.format(command))
 
-    if command.is_voiced:
-        # TODO: Ugly way of testing command arguments...
-        if command.command_args and command.command_args[0]:
+    # TODO: Ugly way of testing command arguments...
+    if command.command_args and command.command_args[0]:
+        if command.is_voiced:
             toot(' '.join(command.command_args))
             chanmsg(strings.TOOT_PENDING)
-        else:
-            chanmsg(strings.TOOT_USAGE)
     else:
-        chanmsg(strings.MUST_BE_VOICED)
+        chanmsg(strings.TOOT_USAGE)
