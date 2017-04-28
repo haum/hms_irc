@@ -22,9 +22,8 @@ class TestToot(unittest.TestCase):
     def test_toot_voiced(self):
         msg = "ceci est un test"
         self.wrapped_handle(self.cb.args(msg).voiced().build())
-        self.rabbit.publish.assert_called_once_with(
-            'mastodon.toot',
-            {'message': msg, 'source': 'irc'})
+        self.rabbit.publish.assert_called_once_with('mastodon.toot', {
+            'message': msg, 'source': 'irc'})
 
     def test_toot_no_message(self):
         self.wrapped_handle(self.cb.build())

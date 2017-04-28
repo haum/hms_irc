@@ -18,15 +18,15 @@ class CommandBuilder:
         return self
 
     def build(self):
-        splitted_args = None
+        split_args = None
         if self.command_args != "":
-            splitted_args = self.command_args.split(' ')
+            split_args = self.command_args.split(' ')
 
         return IRCCommand(
             nick="toto",
             is_voiced=self.is_voiced,
             command_name="spacestatus",
-            command_args=splitted_args)
+            command_args=split_args)
 
 
 def rabbit_mock():

@@ -6,6 +6,8 @@ from hms_irc.commands.tests import CommandBuilder, irc_server_mock, rabbit_mock
 
 class SpaceStatusTest(unittest.TestCase):
 
+    """Test that the spacestatus command handler works well."""
+
     def setUp(self):
         self.irc_server = irc_server_mock()
         self.rabbit = rabbit_mock()
@@ -14,6 +16,8 @@ class SpaceStatusTest(unittest.TestCase):
 
         self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan,
                                                  self.rabbit, msg)
+
+    # Test the non-voiced commands and behaviors
 
     def test_invalid_argument(self):
         """Calls the spacestatus command with invalid argument"""
@@ -32,6 +36,8 @@ class SpaceStatusTest(unittest.TestCase):
         """Check that the help does not publish a message."""
         self.wrapped_handle(self.cb.args("help").build())
         self.rabbit.publish.assert_not_called()
+
+    # Test the open command with voiced and non-voiced users
 
     def test_open_not_voiced(self):
         """Test to open the space with non-voiced user."""

@@ -17,14 +17,16 @@ class AgendaTest(unittest.TestCase):
         self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan,
                                                  self.rabbit, msg)
 
+    # Basic argument checking
+
     def test_invalid_argument(self):
         """Test to call the agenda command with an invalid argument."""
         self.wrapped_handle(self.cb.args("lolilol").build())
         self.rabbit.publish.assert_not_called()
 
-    def test_command_not_voiced(self):
-        """Test to execute a voiced command as non-voiced user."""
-        self.wrapped_handle(self.cb.args("remove 42").build())
+    def test_bad_argument(self):
+        """Test to call a valid command with a bad format."""
+        self.wrapped_handle(self.cb.args("remove toto").voiced().build())
         self.rabbit.publish.assert_not_called()
 
     def test_no_arguments(self):
@@ -34,10 +36,7 @@ class AgendaTest(unittest.TestCase):
             'command': 'list',
             'source': 'irc'})
 
-    def test_bad_argument(self):
-        """Test to call a valid command with a bad format."""
-        self.wrapped_handle(self.cb.args("remove toto").voiced().build())
-        self.rabbit.publish.assert_not_called()
+    # Non-voiced commands
 
     def test_list_all(self):
         """Test list all the events in the agenda."""
@@ -52,8 +51,17 @@ class AgendaTest(unittest.TestCase):
         self.wrapped_handle(self.cb.args("help").build())
         self.rabbit.publish.assert_not_called()
 
+    # Test that unvoiced user cannot call voiced commands
+
+    def test_command_not_voiced(self):
+        """Test to execute a voiced command as non-voiced user."""
+        self.wrapped_handle(self.cb.args("remove 42").build())
+        self.rabbit.publish.assert_not_called()
+
+    # Voiced commands
+
     def test_add(self):
-        """Try to add an event to the agenda using the bot."""
+        """Try to add an event to the agenda."""
         args = "add 10/11/2017 17:45 \"Local du HAUM\" \"Test débile\" Un " \
               "super test complètement débile"
         self.wrapped_handle(self.cb.args(args).voiced().build())
@@ -67,7 +75,7 @@ class AgendaTest(unittest.TestCase):
                 'desc': 'Un super test complètement débile'}})
 
     def test_add_seance(self):
-        """Try to add a seance to the agenda using the bot."""
+        """Try to add a seance to the agenda."""
         args = "add_seance 10/11/2017 11:42"
         self.wrapped_handle(self.cb.args(args).voiced().build())
         self.rabbit.publish.assert_called_with('agenda.query', {
@@ -77,7 +85,7 @@ class AgendaTest(unittest.TestCase):
                'date': '10/11/2017 11:42'}})
 
     def test_modify(self):
-        """Try to modify an event already in the agenda using the bot"""
+        """Try to modify an event already in the agenda."""
         args = "modify 42 titre Un super nouveau titre"
         self.wrapped_handle(self.cb.args(args).voiced().build())
         self.rabbit.publish.assert_called_with('agenda.query', {
@@ -89,7 +97,7 @@ class AgendaTest(unittest.TestCase):
                 'new_value': 'Un super nouveau titre'}})
 
     def test_remove(self):
-        """Try to remove an event already in the agenda using the bot"""
+        """Try to remove an event already in the agenda."""
         self.wrapped_handle(self.cb.args("remove 42").voiced().build())
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'remove',
