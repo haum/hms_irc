@@ -2,14 +2,14 @@ import unittest
 from unittest.mock import Mock
 
 from hms_irc.receivers import irc_debug
+from hms_irc.mocks import irc_server_mock
 
 
 class TestIRCDebugHandler(unittest.TestCase):
 
     def setUp(self):
         self.body = {'privmsg': 'This is a test.'}
-        self.irc_server = Mock()
-        self.irc_server.privmsg = Mock()
+        self.irc_server = irc_server_mock()
         self.irc_chan = '#haum-test'
 
     def test_decode_privmsg(self):

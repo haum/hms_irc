@@ -1,7 +1,8 @@
 import unittest
 
 from hms_irc.commands.spacestatus import handle
-from hms_irc.commands.tests import CommandBuilder, irc_server_mock, rabbit_mock
+from hms_irc.commands.tests import CommandBuilder
+from hms_irc.mocks import irc_server_mock, rabbit_mock
 
 
 class SpaceStatusTest(unittest.TestCase):

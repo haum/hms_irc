@@ -1,7 +1,7 @@
 import unittest
-from unittest.mock import Mock
 
 from hms_irc.receivers import reddit
+from hms_irc.mocks import irc_server_mock
 
 
 class TestRedditHandler(unittest.TestCase):
@@ -26,8 +26,7 @@ class TestRedditHandler(unittest.TestCase):
     def test_call_privmsg(self):
         irc_chan = '#haum-test'
 
-        irc_server = Mock()
-        irc_server.privmsg = Mock()
+        irc_server = irc_server_mock()
 
         reddit.handle(irc_server, irc_chan, self.body)
 
