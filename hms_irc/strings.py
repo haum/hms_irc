@@ -7,7 +7,7 @@ UNKNOWN_ARGUMENT = "Argument invalide"
 # Spacestatus
 
 SPACESTATUS_HELP = "Aide : !spacestatus pour voir si l’espace est ouvert, " \
-                   "autres commandes : !spacestatus [{}]"
+                   "autres commandes : !spacestatus {}"
 
 SPACESTATUS_OPEN = "L'espace est ouvert !"
 SPACESTATUS_CLOSED = "L'espace est fermé !"
