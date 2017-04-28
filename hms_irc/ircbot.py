@@ -81,7 +81,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
             try:
                 # Retrieve the 'handle' function from corresponding module
                 module = importlib.import_module(
-                    'hms_irc.transmitters.{}'.format(command.command_name))
+                    'hms_irc.commands.{}'.format(command.command_name))
                 func = getattr(module, 'handle')
 
                 # Call the handle function with all important arguments

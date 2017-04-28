@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock
 
 from hms_irc.irc import IRCCommand
-from hms_irc.transmitters.agenda import handle
+from hms_irc.commands.agenda import handle
 
 
 def mkcommand(command_args, is_voiced):
