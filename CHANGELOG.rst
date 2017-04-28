@@ -7,6 +7,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+- Added more tests and refactored code in order to to enhance contribution
+  experience
+
 [2.3] - 2017-04-16
 ------------------
 

@@ -1,8 +1,8 @@
 hms_irc, the HAUM’s IRC microservice
 ====================================
 
-.. image:: https://travis-ci.org/haum/hms_agenda.svg?branch=master
-    :target: https://travis-ci.org/haum/hms_agenda
+.. image:: https://travis-ci.org/haum/hms_irc.svg?branch=master
+    :target: https://travis-ci.org/haum/hms_irc
 
 .. image:: https://coveralls.io/repos/github/haum/hms_irc/badge.svg?branch=master
     :target: https://coveralls.io/github/haum/hms_irc?branch=master
