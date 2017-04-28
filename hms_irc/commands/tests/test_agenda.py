@@ -31,7 +31,8 @@ class AgendaTest(unittest.TestCase):
         self.rabbit = Mock()
         self.rabbit.publish = Mock()
 
-        self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan, self.rabbit, msg)
+        self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan,
+                                                 self.rabbit, msg)
 
     def test_invalid_argument(self):
         """Test to call the agenda command with an invalid argument."""
