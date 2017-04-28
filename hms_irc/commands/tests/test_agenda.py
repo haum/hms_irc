@@ -1,8 +1,7 @@
 import unittest
-from unittest.mock import Mock
 
 from hms_irc.commands.agenda import handle
-from hms_irc.commands.tests import CommandBuilder
+from hms_irc.commands.tests import CommandBuilder, irc_server_mock, rabbit_mock
 
 
 class AgendaTest(unittest.TestCase):
@@ -10,13 +9,9 @@ class AgendaTest(unittest.TestCase):
     """Test that the agenda command parser behaves correctly."""
 
     def setUp(self):
-        self.irc_server = Mock()
-        self.irc_server.privmsg = Mock()
-
+        self.irc_server = irc_server_mock()
+        self.rabbit = rabbit_mock()
         self.irc_chan = "#testhaum"
-        self.rabbit = Mock()
-        self.rabbit.publish = Mock()
-
         self.cb = CommandBuilder()
 
         self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan,
