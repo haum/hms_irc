@@ -7,6 +7,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[2.4] - 2017-05-08
+------------------
+
 - Added more tests and refactored code in order to to enhance contribution
   experience
 - Automatic reconnect attempt every hour

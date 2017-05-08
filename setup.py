@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='hms_irc',
-    version='2.3',
+    version='2.4',
     packages=find_packages(),
     scripts=['bin/hms_irc', 'bin/hms_irc_debug'],
 
