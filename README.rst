@@ -27,4 +27,4 @@ License
 -------
 
 This project is brought to you under MIT license. For further information,
-please read the provided ``LICENSE.txt`` file.
+please read the provided ``LICENSE`` file.
