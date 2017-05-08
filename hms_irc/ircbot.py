@@ -54,7 +54,7 @@ class MyBot(irc.bot.SingleServerIRCBot):
     def on_privmsg(self, serv, ev):
         """Method called when someone is talking in private to us."""
         get_logger().info("PRIVMSG {}".format(ev))
-        self.serv.privmsg(NickMask(ev.source).nick, "hey")
+        serv.privmsg(NickMask(ev.source).nick, "hey")
 
     def on_pubmsg(self, serv, ev):
         """Method called when someone is talking on a public chan."""
