@@ -16,7 +16,7 @@ class TwitterHandler(IRCHandler):
         if command.command_args and command.command_args[0]:
             if command.is_voiced:
                 if command.command_args[0] == 'tweet':
-                    self.tweet(' '.join(command.command_args))
+                    self.tweet(' '.join(command.command_args[1:]))
                     self.chanmsg(strings.TWEET_PENDING)
         else:
             self.display_usage()
