@@ -27,7 +27,7 @@ class TwitterHandler(IRCHandler):
         """Closure for sending a tweet."""
         self.rabbit.publish(
             'twitter.query', {
-                'command': command,
+                'command': 'tweet',
                 'status': msg,
                 'source': 'irc'
             })
