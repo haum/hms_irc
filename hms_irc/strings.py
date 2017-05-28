@@ -30,6 +30,11 @@ TWAUM_CLOSED = "@tweet Fin de session ! Jetez un œil à notre agenda sur " \
                "haum.org pour connaître les prochaines ou " \
                "surveillez notre fil twitter."
 
+# Twitter
+
+TWEET_PENDING = "Demande de tweet envoyée !"
+TWEET_USAGE = "usage: !twitter tweet <contenu de mon tweet>"
+
 # Agenda
 
 AGENDA_HELP = (
