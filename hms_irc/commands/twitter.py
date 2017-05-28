@@ -34,4 +34,4 @@ class TwitterHandler(IRCHandler):
 
 def handle(irc_server, irc_chan, rabbit, command):
     h = TwitterHandler(irc_server, irc_chan, rabbit)
-    h.handle(command)%    
+    h.handle(command)
