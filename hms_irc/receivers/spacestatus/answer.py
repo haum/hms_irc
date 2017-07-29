@@ -15,7 +15,7 @@ def dct_to_privmsgs(dct):
     # Space status info (open or closed)
     line1 = strings.SPACESTATUS_OPEN if is_open else strings.SPACESTATUS_CLOSED
 
-    # Check if state changed or not
+    # Check if state changed or not
     if not has_changed:
         line1 += strings.SPACESTATUS_SAME_STATE
 

@@ -43,5 +43,6 @@ def main():
     get_logger().info("Closing connection")
     c.disconnect()
 
+
 if __name__ == "__main__":
     main()

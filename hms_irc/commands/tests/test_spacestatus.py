@@ -15,7 +15,8 @@ class SpaceStatusTest(unittest.TestCase):
         self.irc_chan = "#testhaum"
         self.cb = CommandBuilder()
 
-        self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan,
+        self.wrapped_handle = lambda msg: handle(self.irc_server,
+                                                 self.irc_chan,
                                                  self.rabbit, msg)
 
     # Test the non-voiced commands and behaviors

@@ -12,14 +12,14 @@ def handle(irc_server, irc_chan, dct):
         return key in dct['content'] and dct['content'][key]
 
     # Ignore answers with a source that is not IRC
-    if not 'source' in dct or dct['source'] != 'irc':
+    if 'source' not in dct or dct['source'] != 'irc':
         return
 
     if 'list' in dct['content']:
         if dct['content']['list']:
             for event in dct['content']['list']:
                 irc('#{0}: {1} ; {2} le {4} {5}'.format(*event))
-                time.sleep(1) # avoid spamming too fast
+                time.sleep(1)  # avoid spamming too fast
         else:
             irc('Aucun événement prochainement')
 

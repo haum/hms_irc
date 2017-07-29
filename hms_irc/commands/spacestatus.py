@@ -3,7 +3,8 @@ from hms_irc import strings
 from hms_irc.irc import IRCHandler
 
 
-VOICED_ARGUMENTS = ['open', 'close', 'open_silent', 'close_silent', 'toggle', 'toggle_silent']
+VOICED_ARGUMENTS = ['open', 'close', 'open_silent', 'close_silent', 'toggle',
+                    'toggle_silent']
 VALID_ARGUMENTS = VOICED_ARGUMENTS + ['help']
 
 

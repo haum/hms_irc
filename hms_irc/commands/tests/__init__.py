@@ -1,5 +1,3 @@
-from unittest.mock import Mock
-
 from hms_irc.irc import IRCCommand
 
 

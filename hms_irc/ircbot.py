@@ -6,7 +6,6 @@ import irc.bot
 from irc.client import NickMask, ServerConnectionError
 
 from hms_irc.irc import IRCCommand
-from hms_irc import settings
 
 
 def get_logger():
@@ -85,14 +84,13 @@ class MyBot(irc.bot.SingleServerIRCBot):
                     'hms_irc.commands.{}'.format(command.command_name))
                 func = getattr(module, 'handle')
 
-                # Call the handle function with all important arguments
+                # Call the handle function with all important arguments
                 get_logger().info('Calling transmitter for {}'.format(command))
                 func(self.serv, self.channel, self.rabbit, command)
 
             except (ImportError, AttributeError) as e:
                 get_logger().error(e)
                 self.serv.privmsg(self.channel, 'Commande inexistante')
-
 
     def on_disconnect(self, serv, ev):
         """Method called when we disconnect from the IRC server."""
@@ -114,7 +112,9 @@ class MyBot(irc.bot.SingleServerIRCBot):
             get_logger().error(e)
 
     def handle_reconnection_request(self, signum, frame):
-        """Method forcing a reconnection attempt when the bot's PID receives a particular
+        """Method forcing a reconnection attempt.
+
+        This is used when the bot's PID receives a particular
         signal. Useful to handle *.net *.split. Silent if still connected."""
         self.reconnect_if_disconnected(force_reconnect=True)
 
@@ -136,4 +136,3 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
         except ServerConnectionError as e:
             get_logger().error(e)
-

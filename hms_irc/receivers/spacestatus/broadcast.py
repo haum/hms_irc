@@ -36,5 +36,5 @@ def dct_to_twaum(dct):
 
 
 def handle(irc_server, irc_chan, dct):
-    #irc_server.privmsg(irc_chan, dct_to_privmsg(dct))
+    # irc_server.privmsg(irc_chan, dct_to_privmsg(dct))
     irc_server.privmsg(irc_chan, dct_to_twaum(dct))

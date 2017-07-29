@@ -15,7 +15,8 @@ class AgendaTest(unittest.TestCase):
         self.irc_chan = "#testhaum"
         self.cb = CommandBuilder()
 
-        self.wrapped_handle = lambda msg: handle(self.irc_server, self.irc_chan,
+        self.wrapped_handle = lambda msg: handle(self.irc_server,
+                                                 self.irc_chan,
                                                  self.rabbit, msg)
 
     # Basic argument checking
@@ -63,8 +64,8 @@ class AgendaTest(unittest.TestCase):
 
     def test_add(self):
         """Try to add an event to the agenda."""
-        args = "add 10/11/2017 17:45 \"Local du HAUM\" \"Test débile\" Un " \
-              "super test complètement débile"
+        args = ("add 10/11/2017 17:45 \"Local du HAUM\" \"Test débile\" Un "
+                "super test complètement débile")
         self.wrapped_handle(self.cb.args(args).voiced().build())
         self.rabbit.publish.assert_called_with('agenda.query', {
             'command': 'add',

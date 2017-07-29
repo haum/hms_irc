@@ -29,7 +29,7 @@ class ConnectionResetRequestTests(unittest.TestCase):
         self.bot.serv.reconnect.assert_called_once_with()
 
     def test_with_serv_exception(self):
-        """Test that the connection reset can handle a server error properly."""
+        """Test that the connection reset can handle a server error."""
         self.bot.serv = Mock()
         self.bot.serv.connect = Mock(side_effect=ServerConnectionError("test"))
         self.bot.handle_reconnection_request(signal.SIGUSR1, None)

@@ -33,7 +33,7 @@ setup(
     description='HAUM\'s IRC microservice',
     long_description=long_description,
 
-    classifiers = [
+    classifiers=[
         'Development Status :: 3 - Alpha',
 
         'Intended Audience :: Developers',

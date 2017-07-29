@@ -37,7 +37,8 @@ class AgendaCommand(IRCHandler):
             self.query('list', {'all': True})
 
         elif argument == 'add':
-            regex = re.compile(r'(\d{1,2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2})\s"([^"]+)"\s"([^"]+)"(.+)$')
+            regex = re.compile(r'(\d{1,2}\/\d{2}\/\d{4}\s'
+                               '\d{1,2}:\d{2})\s"([^"]+)"\s"([^"]+)"(.+)$')
             result = self.test_regex(command, regex)
 
             if result:

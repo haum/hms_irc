@@ -8,10 +8,12 @@ python:
 # command to install dependencies
 install:
  - pip install .
- - pip install pytest coverage python-coveralls
+ - pip install pytest coverage python-coveralls flake8
 
 # command to run tests
-script: coverage run --source hms_irc -m py.test
+script:
+  - coverage run --source hms_irc -m py.test
+  - flake8 hms_irc
 
 after_success:
  - coveralls
