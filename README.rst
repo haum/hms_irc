@@ -7,6 +7,10 @@ hms_irc — Extensible IRC microservice
 .. image:: https://coveralls.io/repos/github/haum/hms_irc/badge.svg?branch=master
     :target: https://coveralls.io/github/haum/hms_irc?branch=master
 
+.. image:: https://readthedocs.org/projects/hms-irc/badge/?version=latest
+    :target: http://hms-irc.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 AMQP-based microservice for bidirectionnal IRC interactions.
 
 Service responsabilities:
