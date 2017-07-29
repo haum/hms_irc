@@ -29,6 +29,10 @@ Then start the bot inside the virtualenv::
 
     (venv) $ hms_irc
 
+You can send arbitrary IRC messages using the provided debug tool::
+
+    (venv) $ hms_irc_debug hello world
+
 How it works
 ------------
 

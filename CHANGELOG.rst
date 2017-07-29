@@ -8,6 +8,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 ------------
 
 - Added support for spacestatus toggle command
+- Reworked README and overall documentation
 
 [2.4] - 2017-05-08
 ------------------
