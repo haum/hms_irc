@@ -27,8 +27,6 @@ Here is a concise graph of current *receivers* and *commands* implemented:
     :alt: Functional graph
     :target: _static/functional_graph/hms_irc.png
 
-`Commands <commands.rst>`_
-
 Indices and tables
 ==================
 
