@@ -8,11 +8,10 @@ python:
 # command to install dependencies
 install:
  - pip install .
- - pip install nose
- - pip install python-coveralls
+ - pip install pytest coverage python-coveralls
 
 # command to run tests
-script: nosetests --with-coverage
+script: coverage run --source hms_irc -m py.test
 
 after_success:
  - coveralls
