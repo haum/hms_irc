@@ -1,0 +1,41 @@
+digraph G {
+	rankdir=LR;
+
+	{hms_irc [style=filled, fillcolor=bisque]};
+
+	// Receivers
+	receivers -> agenda;
+	agenda -> answer -> hms_irc;
+
+	receivers -> mastodon;
+	mastodon -> mention -> hms_irc;
+
+	receivers -> spacestatus;
+	spacestatus -> {spacestatus_answer [label=answer]} -> hms_irc;
+	spacestatus -> broadcast -> hms_irc;
+
+	// Commands
+	hms_irc -> commands;
+
+	commands -> "!agenda";
+	"!agenda" -> "add";
+	"!agenda" -> "add_sceance";
+	"!agenda" -> "remove";
+	"!agenda" -> "modify";
+
+	commands -> "!ping";
+
+	commands -> "!spacestatus";
+	"!spacestatus" -> "open";
+	"!spacestatus" -> "close";
+	"!spacestatus" -> "open_silent";
+	"!spacestatus" -> "close_silent";
+	"!spacestatus" -> "toggle";
+	"!spacestatus" -> "toggle_silent";
+
+	commands -> "!toot";
+
+	commands -> "!twitter";
+
+	commands -> "!updatesite";
+}
