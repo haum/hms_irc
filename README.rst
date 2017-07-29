@@ -15,6 +15,9 @@ Service responsabilities:
 - Verify and help users in building AMQP messages for other microservices
 - Allow users and other microservices to communicate using commands/responses
 
+hms_irc is part of the `HAUM Micro-Services (HMS)`_ tools.
+
+.. _HAUM Micro-Services (HMS): https://github.com/haum/hms
 
 Quick start
 -----------
