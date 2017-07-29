@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import sys
 import json
 import logging
@@ -8,8 +6,10 @@ import coloredlogs
 
 from hms_base.client import Client
 
+
 def get_logger():
     return logging.getLogger(__name__)
+
 
 def usage():
     print("usage: debug.py <your message>")

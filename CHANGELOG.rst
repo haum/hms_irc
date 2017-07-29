@@ -7,8 +7,12 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[2.5] - 2017-07-29
+------------------
+
 - Added support for spacestatus toggle command
 - Reworked README and overall documentation
+- Using SCM version and entrypoints for setup.py
 
 [2.4] - 2017-05-08
 ------------------
