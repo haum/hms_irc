@@ -27,6 +27,6 @@ IRC_NAME = 'hms_irc'             # Name of the bot on the server
 # Import prod settings if existing
 
 try:
-    from hms_irc.settings_prod import *
+    from hms_irc.settings_prod import *  # noqa
 except ImportError:
     pass
