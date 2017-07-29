@@ -7,12 +7,20 @@ hms_irc — Extensible IRC microservice
 .. image:: https://coveralls.io/repos/github/haum/hms_irc/badge.svg?branch=master
     :target: https://coveralls.io/github/haum/hms_irc?branch=master
 
+AMQP-based microservice for bidirectionnal IRC interactions.
+
+Service responsabilities:
+
+- Deliver information to users on IRC upon AMQP broadcasts on interesting topics
+- Verify and help users in building AMQP messages for other microservices
+- Allow users and other microservices to communicate using commands/responses
+
+How it works
+------------
+
 This microservice uses the principle of *receivers* and *commands*. It will
 react into the IRC channel using receivers when data arrives from the watched
 AMQP topics, and will send data to AMQP topics upon specific user commands.
-
-Functional graph
-----------------
 
 Here is a concise graph of current *receivers* and *commands* implemented:
 
