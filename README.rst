@@ -15,6 +15,20 @@ Service responsabilities:
 - Verify and help users in building AMQP messages for other microservices
 - Allow users and other microservices to communicate using commands/responses
 
+
+Quick start
+-----------
+
+Create a Python 3 virtualenv and install software::
+
+    $ virtualenv -ppython3 venv
+    $ source venv/bin/activate
+    (venv) $ pip install .
+
+Then start the bot inside the virtualenv::
+
+    (venv) $ hms_irc
+
 How it works
 ------------
 
@@ -24,21 +38,8 @@ AMQP topics, and will send data to AMQP topics upon specific user commands.
 
 Here is a concise graph of current *receivers* and *commands* implemented:
 
-.. image:: doc/functional_graph/hms_irc.png
+.. image:: doc/images/functional_graph/hms_irc.png
     :alt: Functional graph
-
-Using
------
-
-Create a Python 3 virtualenv and install software::
-
-    $ virtualenv -ppython3 venv
-    $ source venv/bin/activate
-    (venv) $ pip install .
-
-Then start the bot inside the virtual env::
-
-    (venv) $ hms_irc
 
 License
 -------
