@@ -13,13 +13,9 @@ def get_logger():
 
 def msg_to_privmsg(msg):
     """Extract the PRIVMSG content from the RabbitMQ message."""
-    return '[reddit /u/{}] {} {}'.format(
-        msg['author'], msg['title'], msg['url'])
+    return '[reddit /u/{author}] {title} {url}'.format(**msg)
 
 
 def handle(irc_server, irc_chan, msg):
-
     irc_server.privmsg(irc_chan, msg_to_privmsg(msg))
-
-    get_logger().info('Posted reddit link {} from {}'.format(
-        msg['id'], msg['author']))
+    get_logger().info('Posted reddit link {id} from {author}'.format(**msg))
