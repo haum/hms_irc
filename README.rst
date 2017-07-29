@@ -45,7 +45,7 @@ AMQP topics, and will send data to AMQP topics upon specific user commands.
 
 Here is a concise graph of current *receivers* and *commands* implemented:
 
-.. image:: doc/images/functional_graph/hms_irc.png
+.. image:: docs/images/functional_graph/hms_irc.png
     :alt: Functional graph
 
 License
