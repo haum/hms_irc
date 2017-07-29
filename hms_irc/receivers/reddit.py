@@ -1,3 +1,9 @@
+"""Prints out new reddit submissions.
+
+The title, url and username of the submission will be printed in the IRC chan.
+
+"""
+
 import logging
 
 

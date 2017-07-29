@@ -1,3 +1,5 @@
+"""Receiver used when the spacestatus service answers user requests."""
+
 import logging
 from hms_irc import strings
 

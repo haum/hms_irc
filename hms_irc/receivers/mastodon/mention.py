@@ -1,3 +1,4 @@
+"""Receiver that will print out every mention of the Mastodon account."""
 
 
 def handle(irc_server, irc_chan, dct):

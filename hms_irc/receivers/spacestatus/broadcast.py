@@ -1,3 +1,13 @@
+"""Receiver that prints out broadcasted openings and closings of the space.
+
+.. todo::
+
+    This receiver will also print out commands for twaum (perl twitter bot)
+    to indicate the status on twitter. This should be removed and commands
+    should be sent to hms_twitter.
+
+"""
+
 import logging
 
 from hms_irc import strings
