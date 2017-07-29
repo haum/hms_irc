@@ -1,35 +1,36 @@
-import unittest
+import pytest
 
 from hms_irc.receivers import reddit
 from hms_irc.mocks import irc_server_mock
 
 
-class TestRedditHandler(unittest.TestCase):
+@pytest.fixture
+def message():
+    return {
+        'author': 'MicroJoe',
+        'title': 'This is a test',
+        'url': 'http://haum.org',
+        'id': 'abcdef'
+    }
 
-    """Test case for Reddit IRC handler."""
 
-    def setUp(self):
-        self.body = {
-            'author': 'MicroJoe',
-            'title': 'This is a test',
-            'url': 'http://haum.org',
-            'id': 'abcdef'
-        }
+@pytest.fixture
+def irc_server():
+    return irc_server_mock()
 
-    def test_privmsg_contains_data(self):
-        privmsg = reddit.msg_to_privmsg(self.body)
 
-        self.assertTrue(self.body['author'] in privmsg)
-        self.assertTrue(self.body['title'] in privmsg)
-        self.assertTrue(self.body['url'] in privmsg)
+def test_privmsg_contains_data(message):
+    privmsg = reddit.msg_to_privmsg(message)
 
-    def test_call_privmsg(self):
-        irc_chan = '#haum-test'
+    assert(message['author'] in privmsg)
+    assert(message['title'] in privmsg)
+    assert(message['url'] in privmsg)
 
-        irc_server = irc_server_mock()
 
-        reddit.handle(irc_server, irc_chan, self.body)
+def test_call_privmsg(irc_server, message):
+    irc_chan = '#haum-test'
+    reddit.handle(irc_server, irc_chan, message)
 
-        irc_server.privmsg.assert_called_once_with(
-            irc_chan,
-            reddit.msg_to_privmsg(self.body))
+    irc_server.privmsg.assert_called_once_with(
+        irc_chan,
+        reddit.msg_to_privmsg(message))

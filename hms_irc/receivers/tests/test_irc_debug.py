@@ -1,32 +1,38 @@
-import unittest
-from unittest.mock import Mock
+import pytest
 
 from hms_irc.receivers import irc_debug
 from hms_irc.mocks import irc_server_mock
 
 
-class TestIRCDebugHandler(unittest.TestCase):
+@pytest.fixture
+def message():
+    return {'privmsg': 'This is a test.'}
 
-    def setUp(self):
-        self.body = {'privmsg': 'This is a test.'}
-        self.irc_server = irc_server_mock()
-        self.irc_chan = '#haum-test'
 
-    def test_decode_privmsg(self):
-        self.assertEqual(
-            self.body['privmsg'],
-            irc_debug.msg_to_privmsg(self.body))
+@pytest.fixture
+def irc_chan():
+    return '#haum-test'
 
-    def test_decode_empty_privmsg(self):
-        self.assertIsNone(irc_debug.msg_to_privmsg({}))
 
-    def test_call_privmsg(self):
-        irc_debug.handle(self.irc_server, self.irc_chan, self.body)
+@pytest.fixture
+def irc_server():
+    return irc_server_mock()
 
-        self.irc_server.privmsg.assert_called_once_with(
-            self.irc_chan, self.body['privmsg'])
 
-    def test_call_empty_privmsg(self):
-        irc_debug.handle(self.irc_server, self.irc_chan, {})
+def test_decode_privmsg(message):
+    assert(message['privmsg'] == irc_debug.msg_to_privmsg(message))
 
-        self.irc_server.privmsg.assert_not_called()
+
+def test_decode_empty_privmsg():
+    assert(irc_debug.msg_to_privmsg({}) is None)
+
+
+def test_call_privmsg(message, irc_chan, irc_server):
+    irc_debug.handle(irc_server, irc_chan, message)
+    irc_server.privmsg.assert_called_once_with(
+        irc_chan, message['privmsg'])
+
+
+def test_call_empty_privmsg(irc_server, irc_chan):
+    irc_debug.handle(irc_server, irc_chan, {})
+    irc_server.privmsg.assert_not_called()
