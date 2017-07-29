@@ -40,8 +40,8 @@ TWEET_USAGE = "usage: !twitter tweet <contenu de mon tweet>"
 AGENDA_HELP = (
     "Pour ajouter un élément : !agenda add JJ/MM/YYYY (h)h:mm \"Lieu\" \"Titre\" Description",
     "Pour ajouter une séance : !agenda add_seance JJ/MM/YYYY (h)h:mm",
-    "Pour modifier un élément, : !agenda modify id [titre|lieu|date|status] nouvelle valeur",
-    "Pour supprimer un élément, : !agenda remove id",
+    "Pour modifier un élément : !agenda modify id [titre|lieu|date|status] nouvelle valeur",
+    "Pour supprimer un élément : !agenda remove id",
 )
 
 # Toot
