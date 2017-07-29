@@ -1,3 +1,5 @@
+"""Receives agenda answers for users who triggered agenda commands."""
+
 import time
 
 

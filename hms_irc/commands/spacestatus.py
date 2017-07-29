@@ -1,3 +1,4 @@
+"""Requests status change for the physical hackerspace location."""
 from hms_irc import strings
 from hms_irc.irc import IRCHandler
 

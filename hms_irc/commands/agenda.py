@@ -1,5 +1,6 @@
+"""Handle agenda events with read and write access."""
+
 import re
-#from hms_irc.compat import handle as handle_compat
 
 from hms_irc import strings
 from hms_irc.irc import IRCHandler

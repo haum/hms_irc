@@ -7,6 +7,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+- Added Sphinx documentation
+
 [2.5] - 2017-07-29
 ------------------
 

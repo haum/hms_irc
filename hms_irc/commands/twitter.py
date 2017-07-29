@@ -1,3 +1,5 @@
+"""Sends a tweet to Twitter using the HAUM account."""
+
 import logging
 
 from hms_irc import strings

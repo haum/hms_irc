@@ -1,3 +1,5 @@
+"""Receives ping responses and show them to the user who used ping command."""
+
 import logging
 
 

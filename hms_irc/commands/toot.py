@@ -1,3 +1,5 @@
+"""Sends a toot to the HAUM's Mastodon account."""
+
 import logging
 
 from hms_irc import strings

@@ -1,3 +1,5 @@
+"""Receives debug messages and print them directly into the IRC chan."""
+
 import logging
 
 
