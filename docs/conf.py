@@ -20,7 +20,11 @@
 import os
 import sys
 
-from setuptools_scm import get_version
+on_rtd = os.getenv('READTHEDOCS') == 'True'
+if on_rtd:
+    import hms_irc
+else:
+    from setuptools_scm import get_version
 
 
 sys.path.insert(0, os.path.abspath('..'))
@@ -64,7 +68,11 @@ author = 'Romain Porte'
 #
 
 # The full version, including alpha/beta/rc tags.
-release = get_version(root=root)
+if on_rtd:
+    release = hms_irc.version.version
+else:
+    release = get_version(root=root)
+
 # The short X.Y version.
 version = '.'.join(release.split('.')[:2])
 
