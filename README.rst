@@ -23,8 +23,8 @@ hms_irc is part of the `HAUM Micro-Services (HMS)`_ tools.
 
 .. _HAUM Micro-Services (HMS): https://github.com/haum/hms
 
-Quick start
------------
+Quickstart
+----------
 
 Create a Python 3 virtualenv and install software::
 
