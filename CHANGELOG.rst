@@ -7,6 +7,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+[2.6] - 2017-07-30
+------------------
+
 - Added Sphinx documentation
 - Cleaned code using flake8
 - Enforce flake8 for new commits on CI
