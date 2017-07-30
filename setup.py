@@ -44,12 +44,21 @@ setup(
     ],
 
     setup_requires=[
-        'setuptools_scm'
+        'setuptools_scm',
     ],
 
     install_requires=[
-        'pika', 'hms_base>=2.0,<3', 'irc', 'coloredlogs',
-        'attrs>16,<17'],
+        'hms_base>=2.0,<3',
+        'pika',
+        'coloredlogs',
+        'irc',
+        'attrs>16,<17',
+    ],
+
+    tests_requires=[
+        'pytest',
+        'flake8',
+    ],
 
     entry_points={
       'console_scripts': [
