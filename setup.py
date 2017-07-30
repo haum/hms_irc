@@ -1,25 +1,36 @@
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import find_packages, setup
 
-from os import path
+import os
+import sys
 
-here = path.abspath(path.dirname(__file__))
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+base_dir = os.path.dirname(__file__)
+src_dir = os.path.join(base_dir, "src")
+
+# When executing the setup.py, we need to be able to import ourselves, this
+# means that we need to add the src/ directory to the sys.path.
+sys.path.insert(0, src_dir)
+
+# Use README as long description
+with open(os.path.join(base_dir, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
 setup(
     name='hms_irc',
     use_scm_version=True,
-    packages=find_packages(),
+
+    package_dir={'': 'src'},
+    packages=find_packages(where='src', exclude=['tests', 'tests.*']),
 
     url='https://github.com/haum/hms_irc',
+    bugtrack_url='https://github.com/haum/hms_irc/issues',
     license='MIT',
+    platforms='any',
 
     author='Romain Porte (MicroJoe)',
     author_email='microjoe@microjoe.org',
 
-    description='HAUM\'s IRC microservice',
+    description='Extensible IRC microservice',
     long_description=long_description,
 
     classifiers=[
