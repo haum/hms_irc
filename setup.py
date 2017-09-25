@@ -45,6 +45,7 @@ setup(
 
     setup_requires=[
         'setuptools_scm',
+        'pytest-runner',
     ],
 
     install_requires=[
