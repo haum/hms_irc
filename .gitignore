@@ -8,3 +8,5 @@ build
 settings_prod.py
 .cache
 .coverage
+.eggs
+*.egg-info
