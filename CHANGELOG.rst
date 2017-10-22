@@ -7,6 +7,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+- Simpler handling of subcommands by using dedicated handler class
+
 [3.0] - 2017-07-30
 ------------------
 
