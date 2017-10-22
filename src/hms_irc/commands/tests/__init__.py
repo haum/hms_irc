@@ -1,4 +1,4 @@
-from hms_irc.irc import IRCCommand
+from hms_irc.irc.commands import IRCCommand
 
 
 class CommandBuilder:

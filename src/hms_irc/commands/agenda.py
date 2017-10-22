@@ -3,7 +3,8 @@
 import re
 
 from hms_irc import strings
-from hms_irc.irc import SubcommandIRCHandler, voiced
+from hms_irc.irc.handlers import SubcommandIRCHandler
+from hms_irc.irc.decorators import voiced
 
 
 class AgendaHandler(SubcommandIRCHandler):

@@ -1,19 +1,7 @@
 import attr
 
 from hms_irc import strings
-
-
-class NotVoicedError(Exception):
-    """Raised when user call a command but is not voiced"""
-    pass
-
-
-@attr.s
-class IRCCommand:
-    nick = attr.ib()
-    is_voiced = attr.ib()
-    command_name = attr.ib()
-    command_args = attr.ib()
+from hms_irc.irc.exceptions import NotVoicedError
 
 
 @attr.s
@@ -75,12 +63,3 @@ class SubcommandIRCHandler(IRCHandler):
 
     def not_voiced(self, command):
         self.chanmsg(strings.MUST_BE_VOICED)
-
-
-def voiced(handler):
-    def verify_voiced(instance, command):
-        if not command.is_voiced:
-            raise NotVoicedError
-
-        handler(instance, command)
-    return verify_voiced

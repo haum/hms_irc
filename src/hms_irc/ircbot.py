@@ -5,7 +5,7 @@ import signal
 import irc.bot
 from irc.client import NickMask, ServerConnectionError
 
-from hms_irc.irc import IRCCommand
+from hms_irc.irc.commands import IRCCommand
 
 
 def get_logger():
