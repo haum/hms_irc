@@ -55,7 +55,22 @@ class AgendaTest(unittest.TestCase):
 
     # Test that unvoiced user cannot call voiced commands
 
-    def test_command_not_voiced(self):
+    def test_add_not_voiced(self):
+        """Test to execute a voiced command as non-voiced user."""
+        self.wrapped_handle(self.cb.args("add 42").build())
+        self.rabbit.publish.assert_not_called()
+
+    def test_add_seance_not_voiced(self):
+        """Test to execute a voiced command as non-voiced user."""
+        self.wrapped_handle(self.cb.args("add_seance 42").build())
+        self.rabbit.publish.assert_not_called()
+
+    def test_modify_not_voiced(self):
+        """Test to execute a voiced command as non-voiced user."""
+        self.wrapped_handle(self.cb.args("modify 42").build())
+        self.rabbit.publish.assert_not_called()
+
+    def test_remove_not_voiced(self):
         """Test to execute a voiced command as non-voiced user."""
         self.wrapped_handle(self.cb.args("remove 42").build())
         self.rabbit.publish.assert_not_called()
