@@ -35,8 +35,8 @@ class AgendaHandler(SubcommandIRCHandler):
     def without_subcommand(self):
         self.query('list')
 
-    def subcommand_not_found(self, command):
-        self.chanmsg("subcommand not found")
+    def subcommand_not_found(self, subcommand):
+        self.chanmsg("subcommand {} not found".format(subcommand))
 
     # Implementation of subcommands
 

@@ -57,7 +57,7 @@ class SubcommandIRCHandler(IRCHandler):
         """
         raise NotImplementedError
 
-    def subcommand_not_found(self, command):
+    def subcommand_not_found(self, subcommand):
         """Called when the provided subcommand was not found."""
         raise NotImplementedError
 
