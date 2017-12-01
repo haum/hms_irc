@@ -53,10 +53,10 @@ setup(
         'pika',
         'coloredlogs',
         'irc',
-        'attrs>16,<17',
+        'attrs>17,<18',
     ],
 
-    tests_requires=[
+    tests_require=[
         'pytest',
         'flake8',
     ],
