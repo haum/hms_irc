@@ -7,6 +7,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 [Unreleased]
 ------------
 
+- Show unexisting command and subcommand names for better UX
 - Removed SpaceApi support
 - Simpler handling of subcommands by using dedicated handler class
 
