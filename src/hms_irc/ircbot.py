@@ -90,7 +90,9 @@ class MyBot(irc.bot.SingleServerIRCBot):
 
             except (ImportError, AttributeError) as e:
                 get_logger().error(e)
-                self.serv.privmsg(self.channel, 'Commande inexistante')
+                self.serv.privmsg(
+                    self.channel,
+                    'Commande "{}" inexistante'.format(command.command_name))
 
     def on_disconnect(self, serv, ev):
         """Method called when we disconnect from the IRC server."""
