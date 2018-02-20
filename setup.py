@@ -50,7 +50,7 @@ setup(
 
     install_requires=[
         'hms_base>=2.0,<3',
-        'pika',
+        'pika==0.10.0',
         'coloredlogs',
         'irc',
         'attrs>17,<18',
