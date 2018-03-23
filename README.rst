@@ -44,5 +44,5 @@ You can send arbitrary IRC messages using the provided debug tool::
 License
 -------
 
-This project is brought to you under MIT license. For further information,
-please read the provided ``LICENSE`` file.
+This project is brought to you under GPLv3 license. For further information,
+please read the provided ``COPYING`` file.
