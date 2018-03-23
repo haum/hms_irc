@@ -10,3 +10,4 @@ settings_prod.py
 .coverage
 .eggs
 *.egg-info
+.pytest_cache
