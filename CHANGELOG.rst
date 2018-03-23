@@ -10,6 +10,11 @@ This project adheres to `Semantic Versioning <http://semver.org/>`__.
 - Show unexisting command and subcommand names for better UX
 - Removed SpaceApi support
 - Simpler handling of subcommands by using dedicated handler class
+- Using object-oriented command handling instead of mix of OO/functions
+- Added support of reading help from docstrings for subcommand handler
+- Moved agenda subcommands help into docstrings
+- Refactored unittest tests to pytest
+- Migrated from MIT license to GPLv3
 
 [3.0] - 2017-07-30
 ------------------
