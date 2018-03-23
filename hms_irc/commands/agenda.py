@@ -17,13 +17,9 @@ class AgendaHandler(SubcommandIRCHandler):
 
         self.rabbit.publish('agenda.query', msg)
 
-    def display_help(self):
-        for msg in strings.AGENDA_HELP:
-            self.chanmsg(msg)
-
     def display_unknown_argument(self):
         self.chanmsg(strings.UNKNOWN_ARGUMENT)
-        self.display_help()
+        self.help()
 
     def test_regex(self, command, regex):
         result = regex.match(' '.join(command.command_args[1:]))
@@ -35,19 +31,18 @@ class AgendaHandler(SubcommandIRCHandler):
     def without_subcommand(self):
         self.query('list')
 
-    def subcommand_not_found(self, subcommand):
-        self.chanmsg("subcommand {} not found".format(subcommand))
-
     # Implementation of subcommands
-
-    def cmd_help(self, command):
-        self.display_help()
 
     def cmd_all(self, command):
         self.query('list', {'all': True})
 
     @voiced
     def cmd_remove(self, command):
+        """Supprime un élément.
+
+        !agenda remove id
+
+        """
         regex = re.compile(r'(\d+)$')
         result = self.test_regex(command, regex)
 
@@ -59,6 +54,11 @@ class AgendaHandler(SubcommandIRCHandler):
 
     @voiced
     def cmd_add(self, command):
+        """Ajoute un élément.
+
+        !agenda add JJ/MM/YYYY (h)h:mm "Lieu" "Titre"
+
+        """
         regex = re.compile(r'(\d{1,2}\/\d{2}\/\d{4}\s'
                            '\d{1,2}:\d{2})\s"([^"]+)"\s"([^"]+)"(.+)$')
         result = self.test_regex(command, regex)
@@ -74,6 +74,11 @@ class AgendaHandler(SubcommandIRCHandler):
 
     @voiced
     def cmd_add_seance(self, command):
+        """Ajoute une séance.
+
+        !agenda add_seance JJ/MM/YYYY (h)h:mm
+
+        """
         regex = re.compile(r'(\d{1,2}\/\d{2}\/\d{4}\s\d{1,2}:\d{2})$')
         result = self.test_regex(command, regex)
 
@@ -85,6 +90,11 @@ class AgendaHandler(SubcommandIRCHandler):
 
     @voiced
     def cmd_modify(self, command):
+        """Modifie un élément.
+
+        !agenda modify id [titre|lieu|date|status] nouvelle valeur
+
+        """
         regex = re.compile(r'(\d+)\s(titre|lieu|date|status)\s(.+)$')
         result = self.test_regex(command, regex)
 

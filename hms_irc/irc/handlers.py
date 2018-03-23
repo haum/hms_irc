@@ -1,4 +1,5 @@
 import attr
+import inspect
 
 from hms_irc import strings, settings
 from hms_irc.irc.exceptions import NotVoicedError
@@ -20,6 +21,9 @@ class IRCHandler:
         self.irc_server.privmsg(self.irc_chan, msg)
 
     def handle(self, command):
+        raise NotImplementedError
+
+    def help(self):
         raise NotImplementedError
 
 
@@ -46,6 +50,26 @@ class SubcommandIRCHandler(IRCHandler):
 
     """
 
+    def subcommand_names(self):
+        for item in dir(self):
+            if item.startswith("cmd_"):
+                yield item
+
+    def subcommands(self):
+        for item in self.subcommand_names():
+            yield getattr(self, item)
+
+    def help(self):
+        for item in self.subcommands():
+            if item.__doc__:
+                # Get the cleaned docstring in a single line
+                doc_lines = inspect.getdoc(item).split('\n')
+                message = ' '.join(filter(lambda l: l != '\n', doc_lines))
+                self.chanmsg(message)
+
+    def cmd_help(self, command):
+        self.help()
+
     def handle(self, command):
         """Automatic handler, routing to dedicated methods for subcommands."""
         if not command.command_args:
@@ -55,7 +79,7 @@ class SubcommandIRCHandler(IRCHandler):
         try:
             subcommand_handler = getattr(self, "cmd_{}".format(subcommand))
         except AttributeError:
-            return self.subcommand_not_found(command)
+            return self.subcommand_not_found(subcommand)
         else:
             try:
                 return subcommand_handler(command)
@@ -73,7 +97,8 @@ class SubcommandIRCHandler(IRCHandler):
 
     def subcommand_not_found(self, subcommand):
         """Called when the provided subcommand was not found."""
-        raise NotImplementedError
+        self.chanmsg("subcommand {} not found".format(subcommand))
+        self.help()
 
     def not_voiced(self, command):
         self.chanmsg(strings.MUST_BE_VOICED)

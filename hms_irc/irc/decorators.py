@@ -1,3 +1,5 @@
+from functools import wraps
+
 from hms_irc.irc.exceptions import NotVoicedError
 
 
@@ -8,6 +10,7 @@ def voiced(handler):
     will raise a NotVoicedError.
 
     """
+    @wraps(handler)
     def verify_voiced(instance, command):
         if not command.is_voiced:
             raise NotVoicedError

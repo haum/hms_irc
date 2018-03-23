@@ -8,6 +8,15 @@ from hms_irc.commands.tests import build_command, irc_server, irc_chan, rabbit
 def instance(irc_server, irc_chan, rabbit):
         return get_instance(irc_server, irc_chan, rabbit)
 
+# Misc
+
+def test_commands_available(instance):
+    """Test that all required subcommands are available."""
+    required = ["add_seance", "add", "modify", "remove", "all", "help"]
+    present = list(instance.subcommand_names())
+    for item in required:
+        assert("cmd_" + item in present)
+
 # Basic argument checking
 
 def test_invalid_argument(instance):
