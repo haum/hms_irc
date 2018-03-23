@@ -2,7 +2,7 @@ import pytest
 
 from hms_irc import settings
 from hms_irc.commands.updatesite import get_instance
-from hms_irc.commands.tests import build_command, irc_server, irc_chan, rabbit
+from hms_irc.commands.tests import build_command
 
 
 @pytest.fixture

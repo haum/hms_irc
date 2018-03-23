@@ -64,7 +64,7 @@ class SubcommandIRCHandler(IRCHandler):
             if item.__doc__:
                 # Get the cleaned docstring in a single line
                 doc_lines = inspect.getdoc(item).split('\n')
-                message = ' '.join(filter(lambda l: l != '\n', doc_lines))
+                message = ' '.join(filter(lambda li: li != '\n', doc_lines))
                 self.chanmsg(message)
 
     def cmd_help(self, command):

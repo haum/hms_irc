@@ -1,10 +1,11 @@
 import pytest
 
 from hms_irc.commands.toot import get_instance
-from hms_irc.commands.tests import build_command, irc_server, irc_chan, rabbit
+from hms_irc.commands.tests import build_command
 
 
 TEST_MESSAGE = "ceci est un test"
+
 
 @pytest.fixture
 def instance(irc_server, irc_chan, rabbit):

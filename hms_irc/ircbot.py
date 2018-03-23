@@ -79,7 +79,8 @@ class MyBot(irc.bot.SingleServerIRCBot):
                 command.command_name = 'spacestatus'
 
             try:
-                # Retrieve the 'get_instance' function from corresponding module
+                # Retrieve the 'get_instance' function from corresponding
+                # module
                 module = importlib.import_module(
                     'hms_irc.commands.{}'.format(command.command_name))
                 get_instance = getattr(module, 'get_instance')
