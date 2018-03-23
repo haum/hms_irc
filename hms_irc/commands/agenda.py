@@ -97,6 +97,5 @@ class AgendaHandler(SubcommandIRCHandler):
             })
 
 
-def handle(irc_server, irc_chan, rabbit, command):
-    h = AgendaHandler(irc_server, irc_chan, rabbit)
-    h.handle(command)
+def get_instance(*args):
+    return AgendaHandler(*args)

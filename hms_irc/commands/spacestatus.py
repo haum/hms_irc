@@ -49,6 +49,5 @@ class SpaceStatusHandler(IRCHandler):
         self.chanmsg(strings.SPACESTATUS_HELP.format(VALID_ARGUMENTS))
 
 
-def handle(irc_server, irc_chan, rabbit, command):
-    h = SpaceStatusHandler(irc_server, irc_chan, rabbit)
-    h.handle(command)
+def get_instance(irc_server, irc_chan, rabbit):
+    return SpaceStatusHandler(irc_server, irc_chan, rabbit)

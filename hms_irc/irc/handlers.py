@@ -1,6 +1,6 @@
 import attr
 
-from hms_irc import strings
+from hms_irc import strings, settings
 from hms_irc.irc.exceptions import NotVoicedError
 
 
@@ -21,6 +21,20 @@ class IRCHandler:
 
     def handle(self, command):
         raise NotImplementedError
+
+
+class CompatIRCHandler(IRCHandler):
+    """Compatibility handler for commands that are not migrated yet."""
+
+    def handle(self, command):
+        data = {
+            'command': command.command_name,
+            'arg': ' '.join(command.command_args),
+            'nick': command.nick,
+            'is_voiced': command.is_voiced
+        }
+
+        self.rabbit.publish(settings.RABBIT_COMMAND_ROUTING_KEY, data)
 
 
 class SubcommandIRCHandler(IRCHandler):

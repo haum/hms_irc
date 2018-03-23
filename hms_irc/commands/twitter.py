@@ -36,6 +36,5 @@ class TwitterHandler(IRCHandler):
             })
 
 
-def handle(irc_server, irc_chan, rabbit, command):
-    h = TwitterHandler(irc_server, irc_chan, rabbit)
-    h.handle(command)
+def get_instance(irc_server, irc_chan, rabbit, command):
+    return TwitterHandler(irc_server, irc_chan, rabbit)

@@ -1,32 +1,27 @@
-import unittest
+import pytest
 
-from hms_irc.commands.toot import handle
-from hms_irc.commands.tests import CommandBuilder
-from hms_irc.mocks import irc_server_mock, rabbit_mock
+from hms_irc.commands.toot import get_instance
+from hms_irc.commands.tests import build_command, irc_server, irc_chan, rabbit
 
 
-class TestToot(unittest.TestCase):
+TEST_MESSAGE = "ceci est un test"
 
-    def setUp(self):
-        self.irc_server = irc_server_mock()
-        self.rabbit = rabbit_mock()
-        self.irc_chan = "#testhaum"
-        self.cb = CommandBuilder()
+@pytest.fixture
+def instance(irc_server, irc_chan, rabbit):
+        return get_instance(irc_server, irc_chan, rabbit)
 
-        self.wrapped_handle = lambda msg: handle(self.irc_server,
-                                                 self.irc_chan,
-                                                 self.rabbit, msg)
 
-    def test_toot_unvoiced(self):
-        self.wrapped_handle(self.cb.args("ceci est un test").build())
-        self.rabbit.publish.assert_not_called()
+def test_toot_unvoiced(instance):
+    instance.handle(build_command("toot " + TEST_MESSAGE))
+    instance.rabbit.publish.assert_not_called()
 
-    def test_toot_voiced(self):
-        msg = "ceci est un test"
-        self.wrapped_handle(self.cb.args(msg).voiced().build())
-        self.rabbit.publish.assert_called_once_with('mastodon.toot', {
-            'message': msg, 'source': 'irc'})
 
-    def test_toot_no_message(self):
-        self.wrapped_handle(self.cb.build())
-        self.rabbit.publish.assert_not_called()
+def test_toot_voiced(instance):
+    instance.handle(build_command("toot " + TEST_MESSAGE, voiced=True))
+    instance.rabbit.publish.assert_called_once_with('mastodon.toot', {
+        'message': TEST_MESSAGE, 'source': 'irc'})
+
+
+def test_toot_no_message(instance):
+    instance.handle(build_command("toot"))
+    instance.rabbit.publish.assert_not_called()

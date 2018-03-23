@@ -2,7 +2,7 @@
 
 .. todo::
 
-    This code is currently using the ``hanle_compat`` function.
+    This code is currently using the ``CompatIRCHandler`` class.
     We should define a new AMQP protocol for this feature and apply it here.
 
 
@@ -12,8 +12,8 @@ Command usage::
 
 """
 
-from hms_irc.compat import handle as handle_compat
+from hms_irc.irc.handlers import CompatIRCHandler
 
 
-def handle(*args, **kwargs):
-    handle_compat(*args, **kwargs)
+def get_instance(*args):
+    return CompatIRCHandler(*args)

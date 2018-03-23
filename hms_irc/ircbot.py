@@ -79,14 +79,15 @@ class MyBot(irc.bot.SingleServerIRCBot):
                 command.command_name = 'spacestatus'
 
             try:
-                # Retrieve the 'handle' function from corresponding module
+                # Retrieve the 'get_instance' function from corresponding module
                 module = importlib.import_module(
                     'hms_irc.commands.{}'.format(command.command_name))
-                func = getattr(module, 'handle')
+                get_instance = getattr(module, 'get_instance')
 
-                # Call the handle function with all important arguments
-                get_logger().info('Calling transmitter for {}'.format(command))
-                func(self.serv, self.channel, self.rabbit, command)
+                # Call the get_instance function with all important arguments
+                get_logger().info('Calling command for {}'.format(command))
+                handler = get_instance(self.serv, self.channel, self.rabbit)
+                handler.handle(command)
 
             except (ImportError, AttributeError) as e:
                 get_logger().error(e)

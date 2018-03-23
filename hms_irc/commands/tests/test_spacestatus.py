@@ -1,55 +1,45 @@
-import unittest
+import pytest
 
-from hms_irc.commands.spacestatus import handle
-from hms_irc.commands.tests import CommandBuilder
+from hms_irc.commands.spacestatus import get_instance
+from hms_irc.commands.tests import build_command, irc_server, irc_chan, rabbit
 from hms_irc.mocks import irc_server_mock, rabbit_mock
 
 
-class SpaceStatusTest(unittest.TestCase):
+@pytest.fixture
+def instance(irc_server, irc_chan, rabbit):
+        return get_instance(irc_server, irc_chan, rabbit)
 
-    """Test that the spacestatus command handler works well."""
+# Test the non-voiced commands and behaviors
 
-    def setUp(self):
-        self.irc_server = irc_server_mock()
-        self.rabbit = rabbit_mock()
-        self.irc_chan = "#testhaum"
-        self.cb = CommandBuilder()
+def test_invalid_argument(instance):
+    """Calls the spacestatus command with invalid argument"""
+    instance.handle(build_command("spacestatus lol"))
+    instance.rabbit.publish.assert_not_called()
 
-        self.wrapped_handle = lambda msg: handle(self.irc_server,
-                                                 self.irc_chan,
-                                                 self.rabbit, msg)
+def test_check_status(instance):
+    """Check that anyone can check the space status."""
+    instance.handle(build_command("spacestatus"))
+    instance.rabbit.publish.assert_called_with('spacestatus.query', {
+        'command': 'status',
+        'source': 'irc'
+    })
 
-    # Test the non-voiced commands and behaviors
+def test_help(instance):
+    """Check that the help does not publish a message."""
+    instance.handle(build_command("spacestatus help"))
+    instance.rabbit.publish.assert_not_called()
 
-    def test_invalid_argument(self):
-        """Calls the spacestatus command with invalid argument"""
-        self.wrapped_handle(self.cb.args("lolilol").build())
-        self.rabbit.publish.assert_not_called()
+# Test the open command with voiced and non-voiced users
 
-    def test_check_status(self):
-        """Check that anyone can check the space status."""
-        self.wrapped_handle(self.cb.build())
-        self.rabbit.publish.assert_called_with('spacestatus.query', {
-            'command': 'status',
-            'source': 'irc'
-        })
+def test_open_not_voiced(instance):
+    """Test to open the space with non-voiced user."""
+    instance.handle(build_command("spacestatus open"))
+    instance.rabbit.assert_not_called()
 
-    def test_help(self):
-        """Check that the help does not publish a message."""
-        self.wrapped_handle(self.cb.args("help").build())
-        self.rabbit.publish.assert_not_called()
-
-    # Test the open command with voiced and non-voiced users
-
-    def test_open_not_voiced(self):
-        """Test to open the space with non-voiced user."""
-        self.wrapped_handle(self.cb.args("open").build())
-        self.rabbit.assert_not_called()
-
-    def test_open_voiced(self):
-        """Test to open the space with voiced user."""
-        self.wrapped_handle(self.cb.args("open").voiced().build())
-        self.rabbit.publish.assert_called_with('spacestatus.query', {
-            'command': 'open',
-            'source': 'irc'
-        })
+def test_open_voiced(instance):
+    """Test to open the space with voiced user."""
+    instance.handle(build_command("spacestatus open", voiced=True))
+    instance.rabbit.publish.assert_called_with('spacestatus.query', {
+        'command': 'open',
+        'source': 'irc'
+    })

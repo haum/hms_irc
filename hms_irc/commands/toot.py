@@ -34,6 +34,5 @@ class TootHandler(IRCHandler):
             })
 
 
-def handle(irc_server, irc_chan, rabbit, command):
-    h = TootHandler(irc_server, irc_chan, rabbit)
-    h.handle(command)
+def get_instance(*args):
+    return TootHandler(*args)
