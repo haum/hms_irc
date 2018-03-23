@@ -4,11 +4,6 @@ import os
 import sys
 
 base_dir = os.path.dirname(__file__)
-src_dir = os.path.join(base_dir, "src")
-
-# When executing the setup.py, we need to be able to import ourselves, this
-# means that we need to add the src/ directory to the sys.path.
-sys.path.insert(0, src_dir)
 
 # Use README as long description
 with open(os.path.join(base_dir, 'README.rst'), encoding='utf-8') as f:
@@ -19,8 +14,7 @@ setup(
     name='hms_irc',
     use_scm_version=True,
 
-    package_dir={'': 'src'},
-    packages=find_packages(where='src', exclude=['tests', 'tests.*']),
+    packages=find_packages(exclude=['tests', 'tests.*']),
 
     url='https://github.com/haum/hms_irc',
     bugtrack_url='https://github.com/haum/hms_irc/issues',
