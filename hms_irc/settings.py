@@ -6,6 +6,9 @@ RABBIT_HOST = 'localhost'                   # Address of the server
 RABBIT_EXCHANGE = 'haum'                    # Name of the direct exchanger
 RABBIT_COMMAND_ROUTING_KEY = 'irc_command'  # Routing key for irc command
 
+RABBIT_USER = ''                            # rabbitMQ user name
+RABBIT_PASS = ''                            # rabbitMQ user pass
+
 PING_NAME = 'hms_irc'
 
 # Set of routing keys to listen to

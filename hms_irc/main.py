@@ -25,7 +25,7 @@ def main():
     rabbit = Client('hms_irc', settings.RABBIT_EXCHANGE,
                     settings.RABBIT_ROUTING_KEYS)
 
-    rabbit.connect(settings.RABBIT_HOST)
+    rabbit.connect(settings.RABBIT_HOST, settings.RABBIT_USER, settings.RABBIT_PASS)
 
     rabbit_thread = Thread(target=rabbit.start_consuming)
     rabbit_thread.setDaemon(True)  # To kill the thread when main is gone
